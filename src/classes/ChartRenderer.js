@@ -55,6 +55,11 @@ class ChartRenderer {
   setScale(data) {
     this.scale = data;
   }
+
+  // Sets scale
+  getScale() {
+    return this.scale;
+  }
 }
 
 export default ChartRenderer;

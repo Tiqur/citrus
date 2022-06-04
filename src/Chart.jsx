@@ -87,7 +87,13 @@ function Chart(props) {
     } 
 
     function onWheel(e) {
-      scale*=e.deltaY < 0 ? 1.1 : 0.9;
+      const zoom = event.deltaY < 0 ? 1.1 : 0.9;
+    
+      chartCtx.translate(currentTransformedCursor.x, currentTransformedCursor.y);
+      chartCtx.scale(zoom, zoom);
+      chartCtx.translate(-currentTransformedCursor.x, -currentTransformedCursor.y);
+      event.preventDefault();
+
       chartRenderer.draw();
       drawOverlay(e);
     }
