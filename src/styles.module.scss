@@ -1,0 +1,65 @@
+body {
+  background-color: grey;
+}
+
+.container {
+  display: grid;
+  background: white;
+  height: 700px;
+  width: 1300px;
+  grid-template-columns: 40px 1fr 60px;
+  grid-template-rows: 40px 1fr 40px;
+  grid-template-areas:
+  "h l l"
+  "o c p"
+  "o t x"
+}
+
+.chart {
+  grid-area: c;
+  &:hover {
+    cursor: cross;
+  }
+}
+
+.price_scale {
+  grid-area: p;
+
+  &:hover {
+    cursor: row-resize;
+  }
+}
+
+.time_scale {
+  grid-area: t;
+  
+  &:hover {
+    cursor: col-resize;
+  }
+}
+
+.corner1 {
+  grid-area: x;
+  background: #131722;
+  border-top: 1px solid #2a2e39;
+  border-left: 1px solid #2a2e39;
+}
+
+.corner2 {
+  grid-area: h;
+  background: #131722;
+  border-bottom: 1px solid #2a2e39;
+  border-right: 1px solid #2a2e39;
+}
+
+.toolbar_top {
+  background: #131722;
+  border-bottom: 1px solid #2a2e39;
+  grid-area: l;
+}
+
+.toolbar_side {
+  background: #131722;
+  border-right: 1px solid #2a2e39;
+  grid-area: o;
+}
