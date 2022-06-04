@@ -1,3 +1,5 @@
+import Bar from './Bar.js'
+
 class ChartRenderer {
   constructor(ctx, barSpacing, barWidth, backgroundColor, canvasWidth, canvasHeight) {
     this.ctx = ctx;
@@ -17,11 +19,34 @@ class ChartRenderer {
     this.ctx.restore();
   }
 
-  // Draws candles obviously
+  // Convert data values to chart coordinates
+  priceToCoordinates(value) {
+    const scaleMin = 150.0
+    const scaleMax = 200.0
+    const oldRange = (scaleMax - scaleMin)
+    const newRange = (this.canvasHeight - 0)
+    return (((value - scaleMin) * newRange) / oldRange) + 0;
+
+  }
+
+  barToCoordinates(b) {
+    return {
+      open: this.priceToCoordinates(b.open),
+      high: this.priceToCoordinates(b.high),
+      low: this.priceToCoordinates(b.low),
+      close: this.priceToCoordinates(b.close)
+    }
+  }
+
+  // Draws candles
   drawCandles() {
-    this.ctx.fillStyle = '#3179f5'
-    for (let i=0; i<this.data.length; i++) {
-      this.ctx.fillRect(i*10, this.data[i].open, 10, this.data[i].close)
+    this.ctx.fillStyle = '#5966e1';
+    for (let i = 0; i < this.data.length; i++) {
+      const coords = this.barToCoordinates(this.data[i]);
+      this.ctx.fillRect(i*15, coords.open, 10, coords.close-coords.open)
+      //this.ctx.fillStyle = '#5db97c'
+      //this.ctx.fillRect(i*15, coords.high, 1, coords.close-coords.open)
+      //console.log(this.data[i], coords)
     }
   }
 
@@ -38,8 +63,8 @@ class ChartRenderer {
     this.drawCandles();
 
     // FOR TESTING
-    this.ctx.fillStyle = '#ec3a21'
-    this.ctx.fillRect(this.canvasWidth/2, this.canvasHeight/2, 50, 50)
+    //this.ctx.fillStyle = '#ec3a21'
+    //this.ctx.fillRect(this.canvasWidth/2, this.canvasHeight/2, 50, 50)
 
     // DRAW!!
     this.ctx.draw;

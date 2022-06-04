@@ -1,6 +1,7 @@
 import { useRef, useEffect, useState, setState } from 'react';
 import ChartRenderer from './classes/ChartRenderer.js';
 import OverlayRenderer from './classes/OverlayRenderer.js';
+import Bar from './classes/Bar.js';
 
 function getTransformedPoint(ctx, x, y) {
     const transform = ctx.getTransform();
@@ -36,6 +37,8 @@ function Chart(props) {
     // Initialize Renderer Classes
     const overlayRenderer = new OverlayRenderer(overlayCtx, canvasWidth, canvasHeight);
     const chartRenderer = new ChartRenderer(chartCtx, 10, 50, '#151924', canvasWidth, canvasHeight);
+
+    chartRenderer.setData([new Bar(0, 167.3, 174.9, 155.3, 157.2), new Bar(0, 157.2, 164.9, 151.1, 189.2)])
 
     // Set overlay cursor style
     overlayCanvas.style.cursor='crosshair';
