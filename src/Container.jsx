@@ -1,6 +1,6 @@
 import Price_scale from './Price_scale.jsx';
 import Time_scale from './Time_scale.jsx';
-import Overlay from './OverlayCanvas.jsx';
+import Chart from './Chart.jsx';
 import Toolbar_top from './Toolbar_top.jsx';
 import Toolbar_side from './Toolbar_side.jsx';
 import styles from './styles.module.scss';
@@ -21,7 +21,7 @@ function Container() {
     <div className={styles.container} ref={container_ref}>  
       <Toolbar_top className={styles.toolbar_top}/>
       <Toolbar_side className={styles.toolbar_side}/>
-      <Overlay className={styles.chart} width={canvasWidth} height={canvasHeight}/>
+      <Chart className={styles.chart} width={canvasWidth} height={canvasHeight}/>
       <Price_scale className={styles.price_scale} height={canvasHeight}/>
       <Time_scale className={styles.time_scale} width={canvasWidth}/>
       <div className={styles.corner1}/>

@@ -1,5 +1,5 @@
 import { useRef, useEffect, useState, setState } from 'react';
-import Chart from './Chart.jsx';
+import ChartRenderer from './classes/ChartRenderer.js';
 
 function getTransformedPoint(ctx, x, y) {
     const transform = ctx.getTransform();
@@ -10,7 +10,19 @@ function getTransformedPoint(ctx, x, y) {
     return { x: transformedX, y: transformedY };
 }
 
-function Overlay(props) {
+
+class OverlayRenderer {
+  constructor(ctx) {
+
+  }
+  draw() {
+
+  }
+}
+
+
+
+function Chart(props) {
   const overlayRef = useRef(null);
   const chartRef = useRef(null);
   const canvasWidth = props.width;
@@ -32,31 +44,15 @@ function Overlay(props) {
     let dragStartPosition = {x: 0, y: 0};
     let currentTransformedCursor;
 
+    const chartRenderer = new ChartRenderer(chartCtx, 10, 50, '#151924', canvasWidth, canvasHeight);
+    chartRenderer.draw();
+
     // Draw chart on initial load
-    drawChart();
+    chartRenderer.draw();
 
     function mouseDown(e) {
       isDragging=true;
       dragStartPosition = getTransformedPoint(chartCtx, e.offsetX, e.offsetY)
-    }
-
-    // Draw Chart
-    function drawChart() {
-      // Exit context
-      chartCtx.save();
-      chartCtx.setTransform(1,0,0,1,0,0)
-
-      // Clear canvas
-      //ctx.clearRect(0, 0, canvas.width, canvas.heigth)
-      chartCtx.fillStyle = '#151924'
-      chartCtx.fillRect(0, 0, canvasWidth, canvasHeight)
-      chartCtx.restore();
-
-      // Draw
-      chartCtx.fillStyle = '#ec3a21'
-      chartCtx.fillRect(canvasWidth/2, canvasHeight/2, 50*scale, 50*scale)
-      chartCtx.draw
-
     }
 
     // Draw overlay
@@ -81,7 +77,7 @@ function Overlay(props) {
         chartCtx.translate(currentTransformedCursor.x - dragStartPosition.x, currentTransformedCursor.y - dragStartPosition.y)
         overlayCanvas.style.cursor='grab';
         // Draw chart
-        drawChart();
+        chartRenderer.draw();
       }
     }
 
@@ -92,7 +88,7 @@ function Overlay(props) {
 
     function onWheel(e) {
       scale*=e.deltaY < 0 ? 1.1 : 0.9;
-      drawChart(e);
+      chartRenderer.draw();
       drawOverlay(e);
     }
 
@@ -111,4 +107,4 @@ function Overlay(props) {
   )
 }
 
-export default Overlay
+export default Chart
