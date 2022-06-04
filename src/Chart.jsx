@@ -12,6 +12,43 @@ function getTransformedPoint(ctx, x, y) {
     return { x: transformedX, y: transformedY };
 }
 
+// TEMP FOR TESTING
+// TEMP FOR TESTING
+// TEMP FOR TESTING
+// TEMP FOR TESTING
+let last = [0, 169, 420, 121, 321];
+const bars = [];
+
+function getRandomArbitrary(min, max) {
+  return Math.floor(Math.random() * (max - min) + min)
+}
+
+
+function gen() {
+  const open = last[4]
+  const high = getRandomArbitrary(open+1, open+100);
+  const low = getRandomArbitrary(open-1, open-100);
+  const close = getRandomArbitrary(open+100, open-100);
+
+  const ohlc = [
+    0, open, high, low, close
+  ]
+
+  last = ohlc;
+
+  return ohlc;
+}
+
+for (let i=0; i<100; i++) {
+  bars.push(new Bar(...gen()))
+}
+
+// TEMP FOR TESTING
+// TEMP FOR TESTING
+// TEMP FOR TESTING
+// TEMP FOR TESTING
+
+
 
 function Chart(props) {
   const overlayRef = useRef(null);
@@ -37,7 +74,7 @@ function Chart(props) {
     // Initialize Renderer Classes
     const overlayRenderer = new OverlayRenderer(overlayCtx, canvasWidth, canvasHeight);
     const chartRenderer = new ChartRenderer(chartCtx, 10, 50, '#151924', canvasWidth, canvasHeight);
-    chartRenderer.setData([new Bar(0, 29766.2, 29766.7, 29750.5, 29750.5), new Bar(0, 29750.5, 29750.5, 29729.0, 29732.8), new Bar(0, 29732.7, 29755.0, 29732.7, 29754.2), new Bar(0, 29754.3, 29779.7, 29754.2, 29773.5)])
+    chartRenderer.setData(bars)
 
     // Set overlay cursor style
     overlayCanvas.style.cursor='crosshair';

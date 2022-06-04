@@ -21,8 +21,8 @@ class ChartRenderer {
 
   // Convert data values to chart coordinates
   priceToCoordinates(value) {
-    const scaleMin = 29880.0;
-    const scaleMax = 29560.0;
+    const scaleMin = 0.0;
+    const scaleMax = 500.0;
     const oldRange = (scaleMax - scaleMin)
     const newRange = (this.canvasHeight - 0)
     return (((value - scaleMin) * newRange) / oldRange) + 0;
