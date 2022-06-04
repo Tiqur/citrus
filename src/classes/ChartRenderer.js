@@ -21,8 +21,8 @@ class ChartRenderer {
 
   // Convert data values to chart coordinates
   priceToCoordinates(value) {
-    const scaleMin = 150.0
-    const scaleMax = 200.0
+    const scaleMin = 29880.0;
+    const scaleMax = 29560.0;
     const oldRange = (scaleMax - scaleMin)
     const newRange = (this.canvasHeight - 0)
     return (((value - scaleMin) * newRange) / oldRange) + 0;
@@ -40,10 +40,11 @@ class ChartRenderer {
 
   // Draws candles
   drawCandles() {
-    this.ctx.fillStyle = '#5966e1';
     for (let i = 0; i < this.data.length; i++) {
       const coords = this.barToCoordinates(this.data[i]);
+      this.ctx.fillStyle = this.data[i].close >= this.data[i].open ? "#ffffff" : "#5966e1"
       this.ctx.fillRect(i*15, coords.open, 10, coords.close-coords.open)
+      //this.ctx.fillText(coords.open, 10, this.canvasHeight/2)
       //this.ctx.fillStyle = '#5db97c'
       //this.ctx.fillRect(i*15, coords.high, 1, coords.close-coords.open)
       //console.log(this.data[i], coords)
