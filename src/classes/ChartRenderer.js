@@ -7,7 +7,6 @@ class ChartRenderer {
     this.canvasWidth = canvasWidth;
     this.canvasHeight = canvasHeight;
     this.data = [];
-    this.scale = 1.0;
   }
 
   // Clears canvas
@@ -22,7 +21,7 @@ class ChartRenderer {
   drawCandles() {
     this.ctx.fillStyle = '#3179f5'
     for (let i=0; i<this.data.length; i++) {
-      this.ctx.fillRect(i*10*scale, this.data[i].open*scale, 10*scale, this.data[i].close*scale)
+      this.ctx.fillRect(i*10, this.data[i].open, 10, this.data[i].close)
     }
   }
 
@@ -40,7 +39,7 @@ class ChartRenderer {
 
     // FOR TESTING
     this.ctx.fillStyle = '#ec3a21'
-    this.ctx.fillRect(this.canvasWidth/2, this.canvasHeight/2, 50*this.scale, 50*this.scale)
+    this.ctx.fillRect(this.canvasWidth/2, this.canvasHeight/2, 50, 50)
 
     // DRAW!!
     this.ctx.draw;
@@ -49,16 +48,6 @@ class ChartRenderer {
   // Sets candlestick data 
   setData(data) {
     this.data = data;
-  }
-
-  // Sets scale
-  setScale(data) {
-    this.scale = data;
-  }
-
-  // Sets scale
-  getScale() {
-    return this.scale;
   }
 }
 
