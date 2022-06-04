@@ -1,5 +1,6 @@
 import { useRef, useEffect, useState, setState } from 'react';
 import ChartRenderer from './classes/ChartRenderer.js';
+import OverlayRenderer from './classes/OverlayRenderer.js';
 
 function getTransformedPoint(ctx, x, y) {
     const transform = ctx.getTransform();
@@ -9,17 +10,6 @@ function getTransformedPoint(ctx, x, y) {
     const transformedY = inverseZoom * y - inverseZoom * transform.f;
     return { x: transformedX, y: transformedY };
 }
-
-
-class OverlayRenderer {
-  constructor(ctx) {
-
-  }
-  draw() {
-
-  }
-}
-
 
 
 function Chart(props) {
@@ -38,14 +28,17 @@ function Chart(props) {
     const chartCanvas = chartRef.current
     const chartCtx = chartCanvas.getContext('2d')
 
-    overlayCanvas.style.cursor='crosshair';
-
+    // Panning and zoom variables
     let isDragging = false;
     let dragStartPosition = {x: 0, y: 0};
     let currentTransformedCursor;
 
+    // Initialize Renderer Classes
+    const overlayRenderer = new OverlayRenderer(overlayCtx, canvasWidth, canvasHeight);
     const chartRenderer = new ChartRenderer(chartCtx, 10, 50, '#151924', canvasWidth, canvasHeight);
-    chartRenderer.draw();
+
+    // Set overlay cursor style
+    overlayCanvas.style.cursor='crosshair';
 
     // Draw chart on initial load
     chartRenderer.draw();
@@ -55,23 +48,7 @@ function Chart(props) {
       dragStartPosition = getTransformedPoint(chartCtx, e.offsetX, e.offsetY)
     }
 
-    // Draw overlay
-    function drawOverlay(e) {
-      // Clear OVERLAY canvas
-      overlayCtx.clearRect(0, 0, canvasWidth, canvasHeight)
-      overlayCtx.restore();
-
-      // Draw vertical and horizontal lines on OVERLAY
-      overlayCtx.fillStyle = '#444a9e'
-      overlayCtx.fillRect(e.offsetX-canvasWidth, e.offsetY, canvasWidth*2, 1)
-      overlayCtx.fillRect(e.offsetX, e.offsetY-canvasHeight, 1, canvasHeight*2)
-      overlayCtx.draw
-    }
-
     function mouseMove(e) {
-      // Draw overlay
-      drawOverlay(e);
-
       currentTransformedCursor = getTransformedPoint(chartCtx, e.offsetX, e.offsetY);
       if (isDragging) {
         chartCtx.translate(currentTransformedCursor.x - dragStartPosition.x, currentTransformedCursor.y - dragStartPosition.y)
@@ -79,6 +56,9 @@ function Chart(props) {
         // Draw chart
         chartRenderer.draw();
       }
+
+      // Draw overlay
+      overlayRenderer.draw(e);
     }
 
     function mouseUp() {
@@ -95,7 +75,7 @@ function Chart(props) {
       event.preventDefault();
 
       chartRenderer.draw();
-      drawOverlay(e);
+      overlayRenderer.draw(e);
     }
 
     overlayCanvas.addEventListener('mousedown', mouseDown);
