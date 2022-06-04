@@ -42,12 +42,22 @@ class ChartRenderer {
   drawCandles() {
     for (let i = 0; i < this.data.length; i++) {
       const coords = this.barToCoordinates(this.data[i]);
-      this.ctx.fillStyle = this.data[i].close >= this.data[i].open ? "#ffffff" : "#5966e1"
+      const accumulation = this.data[i].close >= this.data[i].open;
+
+      // Set candle color
+      this.ctx.fillStyle = accumulation ? "#ffffff" : "#5966e1"
+
+      // Draw candle body
       this.ctx.fillRect(i*15, coords.open, 10, coords.close-coords.open)
-      //this.ctx.fillText(coords.open, 10, this.canvasHeight/2)
-      //this.ctx.fillStyle = '#5db97c'
-      //this.ctx.fillRect(i*15, coords.high, 1, coords.close-coords.open)
-      //console.log(this.data[i], coords)
+
+      // Draw wicks
+      if (accumulation) {
+        this.ctx.fillRect(i*15+4.5, coords.close, 0.4, coords.high-coords.close)
+        this.ctx.fillRect(i*15+4.5, coords.open, 0.4, coords.low-coords.open)
+      } else {
+        this.ctx.fillRect(i*15+4.5, coords.open, 0.4, coords.high-coords.open)
+        this.ctx.fillRect(i*15+4.5, coords.close, 0.4, coords.low-coords.close)
+      }
     }
   }
 

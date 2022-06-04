@@ -37,7 +37,6 @@ function Chart(props) {
     // Initialize Renderer Classes
     const overlayRenderer = new OverlayRenderer(overlayCtx, canvasWidth, canvasHeight);
     const chartRenderer = new ChartRenderer(chartCtx, 10, 50, '#151924', canvasWidth, canvasHeight);
-
     chartRenderer.setData([new Bar(0, 29766.2, 29766.7, 29750.5, 29750.5), new Bar(0, 29750.5, 29750.5, 29729.0, 29732.8), new Bar(0, 29732.7, 29755.0, 29732.7, 29754.2), new Bar(0, 29754.3, 29779.7, 29754.2, 29773.5)])
 
     // Set overlay cursor style
