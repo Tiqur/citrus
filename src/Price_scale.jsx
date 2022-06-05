@@ -2,7 +2,8 @@ import { useRef, useEffect, useState, setState } from 'react';
 
 function Price_scale(props) {
   const canvasRef = useRef(null);
-  const [scale, setScale] = useState(0);
+  const [mouseDown, setMouseDown] = useState(false);
+  const [lastY, setLastY] = useState(0);
   const width = 60;
   const height = props.height;
 
@@ -22,27 +23,22 @@ function Price_scale(props) {
     ctx.fillText("50000", 10, canvas.height/2)
 
 
-    let mouseDown = false;
-    let startPosY = 0;
-
     canvas.addEventListener('mousedown', function() { 
-      console.log('mousedown')
-      let rect = canvas.getBoundingClientRect();
-      startPosY=event.clientY - rect.top;
-      mouseDown=true;
+      setMouseDown(true);
     }, false);
 
     canvas.addEventListener('mouseup', function() {
-      console.log('mouseup')
-      mouseDown=false;
-      console.log(scale)
+      setMouseDown(false);
     }, false);
 
     canvas.addEventListener('mousemove', function() {
       if (mouseDown) {
         //console.log('mousemove')
-      let rect = canvas.getBoundingClientRect();
-        setScale(scale+event.clientY - rect.top - startPosY);
+        let rect = canvas.getBoundingClientRect();
+        const currentY = event.clientY - rect.top;
+        const scale = currentY > lastY ? 1.02 : 0.98;
+        props.setScaleDelta(props.scaleDelta*scale);
+        setLastY(currentY)
       }
     }, false);
 

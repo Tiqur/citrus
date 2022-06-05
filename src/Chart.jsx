@@ -63,7 +63,6 @@ function Chart(props) {
   const chartRef = useRef(null);
   const canvasWidth = props.width;
   const canvasHeight = props.height;
-  let scale = 1.0;
 
   useEffect(() => {
     // Overlay
@@ -85,10 +84,10 @@ function Chart(props) {
     chartRenderer.setData(bars);
     
     // TODO: Auto scale on first load later
-    chartRenderer.setScaleCenter(29000.0);
-    chartRenderer.setScaleDelta(1000.0*scale);
-    overlayRenderer.setScaleCenter(29000.0);
-    overlayRenderer.setScaleDelta(1000.0*scale);
+    chartRenderer.setScaleCenter(props.scaleCenter);
+    chartRenderer.setScaleDelta(props.scaleDelta);
+    overlayRenderer.setScaleCenter(props.scaleCenter);
+    overlayRenderer.setScaleDelta(props.scaleDelta);
 
     // Set overlay cursor style
     overlayCanvas.style.cursor='crosshair';

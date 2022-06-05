@@ -11,6 +11,8 @@ function Container() {
   let container_ref = useRef(0);
   let [canvasHeight, setCanvasHeight] = useState(0);
   let [canvasWidth, setCanvasWidth] = useState(0);
+  let [scaleCenter, setScaleCenter] = useState(29000);
+  let [scaleDelta, setScaleDelta] = useState(1000);
   
   useEffect(() => {
     setCanvasHeight(container_ref.current.clientHeight-80)
@@ -21,8 +23,8 @@ function Container() {
     <div className={styles.container} ref={container_ref}>  
       <Toolbar_top className={styles.toolbar_top}/>
       <Toolbar_side className={styles.toolbar_side}/>
-      <Chart className={styles.chart} width={canvasWidth} height={canvasHeight}/>
-      <Price_scale className={styles.price_scale} height={canvasHeight}/>
+      <Chart className={styles.chart} scaleDelta={scaleDelta} scaleCenter={scaleCenter} width={canvasWidth} height={canvasHeight}/>
+      <Price_scale className={styles.price_scale} scaleDelta={scaleDelta} setScaleDelta={setScaleDelta} height={canvasHeight}/>
       <Time_scale className={styles.time_scale} width={canvasWidth}/>
       <div className={styles.corner1}/>
       <div className={styles.corner2}/>
