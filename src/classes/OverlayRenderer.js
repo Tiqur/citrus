@@ -3,6 +3,8 @@ class OverlayRenderer {
     this.ctx = ctx;
     this.canvasWidth = canvasWidth;
     this.canvasHeight = canvasHeight;
+    this.scaleCenter = 0;
+    this.scaleDelta = 0;
   }
 
   // Clears canvas
@@ -21,8 +23,8 @@ class OverlayRenderer {
 
   // Get price from cursor coordinates
   getPriceFromCoords(e) {
-    const scaleMin = 29000.0;
-    const scaleMax = 30000.0;
+    const scaleMin = this.scaleCenter-this.scaleDelta;
+    const scaleMax = this.scaleCenter+this.scaleDelta;
     const oldRange = scaleMax - scaleMin;
     const newRange = -this.canvasHeight;
     //return ((((value - scaleMin) * newRange) / oldRange) + 0)+this.canvasHeight;
@@ -35,7 +37,7 @@ class OverlayRenderer {
   // Draw OHLC in top corner
   drawOHLC() {
 
-    // This can probably be optimized later on
+    // TODO: This can probably be optimized later on
     this.ctx.fillStyle = '#444a9e'
     this.ctx.fillText(`O`, 10, 20)
     this.ctx.fillStyle = '#ffffff'
@@ -72,7 +74,7 @@ class OverlayRenderer {
     // Draw OHLC
     this.drawOHLC();
 
-    console.log(this.getPriceFromCoords(e));
+    //console.log(this.getPriceFromCoords(e));
 
     // DRAW!!
     this.ctx.draw;
@@ -81,6 +83,15 @@ class OverlayRenderer {
   // Sets candlestick data 
   setData(data) {
     this.data = data;
+  }
+
+  // Adjusts chart scale
+  setScaleCenter(value) {
+    this.scaleCenter = value;
+  }
+
+  setScaleDelta(value) {
+    this.scaleDelta = value;
   }
 }
 

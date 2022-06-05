@@ -82,7 +82,13 @@ function Chart(props) {
     // Initialize Renderer Classes
     const overlayRenderer = new OverlayRenderer(overlayCtx, canvasWidth, canvasHeight);
     const chartRenderer = new ChartRenderer(chartCtx, 10, 50, '#151924', canvasWidth, canvasHeight);
-    chartRenderer.setData(bars)
+    chartRenderer.setData(bars);
+    
+    // TODO: Auto scale on first load later
+    chartRenderer.setScaleCenter(29000.0);
+    chartRenderer.setScaleDelta(1000.0*scale);
+    overlayRenderer.setScaleCenter(29000.0);
+    overlayRenderer.setScaleDelta(1000.0*scale);
 
     // Set overlay cursor style
     overlayCanvas.style.cursor='crosshair';

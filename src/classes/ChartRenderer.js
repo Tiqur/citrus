@@ -1,3 +1,4 @@
+import { setState, useState } from 'react';
 import Bar from './Bar.js'
 
 class ChartRenderer {
@@ -8,6 +9,8 @@ class ChartRenderer {
     this.backgroundColor = backgroundColor;
     this.canvasWidth = canvasWidth;
     this.canvasHeight = canvasHeight;
+    this.scaleCenter = 0;
+    this.scaleDelta = 0;
     this.data = [];
   }
 
@@ -20,8 +23,8 @@ class ChartRenderer {
 
   // Convert data values to chart coordinates
   priceToCoordinates(value) {
-    const scaleMin = 29000.0;
-    const scaleMax = 30000.0;
+    const scaleMin = this.scaleCenter-this.scaleDelta;
+    const scaleMax = this.scaleCenter+this.scaleDelta;
     const oldRange = scaleMax - scaleMin;
     const newRange = -this.canvasHeight;
     return Math.floor((((value - scaleMin) * newRange) / oldRange) + 0)+this.canvasHeight;
@@ -53,7 +56,7 @@ class ChartRenderer {
       if (accumulation) {
         //console.log(this.data[i], coords)
         this.ctx.fillRect(i*bar_gap+10, coords.low, 1, coords.open-coords.close+coords.high-coords.low)
-        console.log(coords)
+        //console.log(coords)
       } else {
         this.ctx.fillRect(i*bar_gap+10, coords.low, 1, coords.open-coords.close+coords.high-coords.low)
       }
@@ -83,6 +86,15 @@ class ChartRenderer {
   // Sets candlestick data 
   setData(data) {
     this.data = data;
+  }
+
+  // Adjusts chart scale
+  setScaleCenter(value) {
+    this.scaleCenter = value;
+  }
+
+  setScaleDelta(value) {
+    this.scaleDelta = value;
   }
 }
 
