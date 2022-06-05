@@ -2,7 +2,7 @@ import { setState, useState } from 'react';
 import Bar from './Bar.js'
 
 class ChartRenderer {
-  constructor(ctx, barSpacing, barWidth, backgroundColor, canvasWidth, canvasHeight) {
+  constructor(ctx, barSpacing, barWidth, backgroundColor, canvasWidth, canvasHeight, candleWidth) {
     this.ctx = ctx;
     this.barSpacing = barSpacing;
     this.barWidth = barWidth;
@@ -11,6 +11,7 @@ class ChartRenderer {
     this.canvasHeight = canvasHeight;
     this.scaleCenter = 0;
     this.scaleDelta = 0;
+    this.candleWidth = candleWidth;
     this.data = [];
   }
 
@@ -41,9 +42,10 @@ class ChartRenderer {
 
   // Draws candles
   drawCandles() {
-    const bar_gap = 25;
     const right_margin = 100;
-    const candleWidth = 21;
+    const candleWidth = this.candleWidth;
+    const wickWidth = 1
+    const bar_gap = Math.floor(candleWidth*1.2);
     const wickOffset = Math.floor(candleWidth/2);
 
     for (let i = 0; i < this.data.length; i++) {
@@ -56,15 +58,15 @@ class ChartRenderer {
       this.ctx.fillStyle = accumulation ? "#ffffff" : "#5966e1"
 
       // Draw candle body
-      this.ctx.fillRect(xLoc, coords.open, 21, coords.close-coords.open)
+      this.ctx.fillRect(xLoc, coords.open, candleWidth, coords.close-coords.open)
 
       // Draw wicks
       if (accumulation) {
         //console.log(this.data[i], coords)
-        this.ctx.fillRect(xLoc+wickOffset, coords.low, 1, coords.open-coords.close+coords.high-coords.low)
+        this.ctx.fillRect(xLoc+wickOffset, coords.low, wickWidth, coords.open-coords.close+coords.high-coords.low)
         //console.log(coords)
       } else {
-        this.ctx.fillRect(xLoc+wickOffset, coords.low, 1, coords.open-coords.close+coords.high-coords.low)
+        this.ctx.fillRect(xLoc+wickOffset, coords.low, wickWidth, coords.open-coords.close+coords.high-coords.low)
       }
     }
   }

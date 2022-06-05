@@ -80,7 +80,7 @@ function Chart(props) {
 
     // Initialize Renderer Classes
     const overlayRenderer = new OverlayRenderer(overlayCtx, canvasWidth, canvasHeight);
-    const chartRenderer = new ChartRenderer(chartCtx, 10, 50, '#151924', canvasWidth, canvasHeight);
+    const chartRenderer = new ChartRenderer(chartCtx, 10, 50, '#151924', canvasWidth, canvasHeight, props.candleWidth);
     chartRenderer.setData(bars);
     
     // TODO: Auto scale on first load later
@@ -120,11 +120,12 @@ function Chart(props) {
 
     function onWheel(e) {
       const zoom = event.deltaY < 0 ? 1.1 : 0.9;
+      props.setCandleWidth(props.candleWidth*zoom)
     
-      chartCtx.translate(currentTransformedCursor.x, currentTransformedCursor.y);
-      chartCtx.scale(zoom, zoom);
-      chartCtx.translate(-currentTransformedCursor.x, -currentTransformedCursor.y);
-      event.preventDefault();
+      //chartCtx.translate(currentTransformedCursor.x, currentTransformedCursor.y);
+      //chartCtx.scale(zoom, zoom);
+      //chartCtx.translate(-currentTransformedCursor.x, -currentTransformedCursor.y);
+      //event.preventDefault();
 
       chartRenderer.draw();
       overlayRenderer.draw(e);
