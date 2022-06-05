@@ -7,9 +7,22 @@ function Price_scale(props) {
   const width = 60;
   const height = props.height;
 
+  const handleMouseDown = () => setMouseDown(true);
+  const handleMouseUp = () => setMouseDown(false);
+  const handleMouseMove = (canvas) => {
+    if (mouseDown) {
+      let rect = canvas.getBoundingClientRect();
+      const currentY = event.clientY - rect.top;
+      const scale = currentY > lastY ? 1.02 : 0.98;
+
+      props.setScaleDelta(props.scaleDelta*scale);
+      setLastY(currentY);
+    }
+  }
+
   useEffect(() => {
-    const canvas = canvasRef.current
-    const ctx = canvas.getContext('2d')
+    const canvas = canvasRef.current;
+    const ctx = canvas.getContext('2d');
     canvas.style.cursor='row-resize';
     
     ctx.fillStyle = '#151924'
@@ -18,32 +31,19 @@ function Price_scale(props) {
     ctx.fillStyle = '#2a2e39'
     ctx.fillRect(0, 0, 1, canvas.height)
 
-
     ctx.fillStyle = '#ffffff'
     ctx.fillText("50000", 10, canvas.height/2)
 
+    canvas.addEventListener('mousedown', handleMouseDown);
+    canvas.addEventListener('mouseup', handleMouseUp);
+    canvas.addEventListener('mousemove', () => handleMouseMove(canvas));
 
-    canvas.addEventListener('mousedown', function() { 
-      setMouseDown(true);
-    }, false);
-
-    canvas.addEventListener('mouseup', function() {
-      setMouseDown(false);
-    }, false);
-
-    canvas.addEventListener('mousemove', function() {
-      if (mouseDown) {
-        //console.log('mousemove')
-        let rect = canvas.getBoundingClientRect();
-        const currentY = event.clientY - rect.top;
-        const scale = currentY > lastY ? 1.02 : 0.98;
-        props.setScaleDelta(props.scaleDelta*scale);
-        setLastY(currentY);
-      }
-    }, false);
-
-    ctx.draw
-  })
+    return () => {
+      canvas.removeEventListener('mousedown', handleMouseDown);
+      canvas.removeEventListener('mouseup', handleMouseUp);
+      canvas.removeEventListener('mousemove', handleMouseMove);
+    }
+  }, [handleMouseDown, handleMouseUp, handleMouseMove])
 
   return (
     <canvas ref={canvasRef} width={width} height={height}/>
