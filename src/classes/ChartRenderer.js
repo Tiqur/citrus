@@ -25,7 +25,6 @@ class ChartRenderer {
     const oldRange = scaleMax - scaleMin;
     const newRange = -this.canvasHeight;
     return Math.floor((((value - scaleMin) * newRange) / oldRange) + 0)+this.canvasHeight;
-
   }
 
   barToCoordinates(b) {
@@ -54,6 +53,7 @@ class ChartRenderer {
       if (accumulation) {
         //console.log(this.data[i], coords)
         this.ctx.fillRect(i*bar_gap+10, coords.low, 1, coords.open-coords.close+coords.high-coords.low)
+        console.log(coords)
       } else {
         this.ctx.fillRect(i*bar_gap+10, coords.low, 1, coords.open-coords.close+coords.high-coords.low)
       }

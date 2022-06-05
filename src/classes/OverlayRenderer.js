@@ -19,6 +19,19 @@ class OverlayRenderer {
     this.ctx.fillRect(e.offsetX, e.offsetY-this.canvasHeight, 1, this.canvasHeight*2)
   }
 
+  // Get price from cursor coordinates
+  getPriceFromCoords(e) {
+    const scaleMin = 29000.0;
+    const scaleMax = 30000.0;
+    const oldRange = scaleMax - scaleMin;
+    const newRange = -this.canvasHeight;
+    //return ((((value - scaleMin) * newRange) / oldRange) + 0)+this.canvasHeight;
+
+    return ((e.offsetY-this.canvasHeight-0)*oldRange)/newRange+scaleMin;
+
+    //console.log(e.offsetY, this.canvasHeight)
+  }
+
   // Draw OHLC in top corner
   drawOHLC() {
 
@@ -58,6 +71,8 @@ class OverlayRenderer {
 
     // Draw OHLC
     this.drawOHLC();
+
+    console.log(this.getPriceFromCoords(e));
 
     // DRAW!!
     this.ctx.draw;

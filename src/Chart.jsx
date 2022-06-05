@@ -50,6 +50,7 @@ bars.push(new Bar(0, 29641.0, 29687.3, 29592.4, 29686.0))
 bars.push(new Bar(0, 29685.9, 29714.0, 29664.5, 29682.1))
 bars.push(new Bar(0, 29682.1, 29690.3, 29654.9, 29672.9))
 bars.push(new Bar(0, 29673.0, 29700.0, 29671.7, 29682.0))
+bars.push(new Bar(0, 29999.0, 30000.0, 30000.0, 30001.0))
 // TEMP FOR TESTING
 // TEMP FOR TESTING
 // TEMP FOR TESTING
