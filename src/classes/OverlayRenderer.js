@@ -19,6 +19,31 @@ class OverlayRenderer {
     this.ctx.fillRect(e.offsetX, e.offsetY-this.canvasHeight, 1, this.canvasHeight*2)
   }
 
+  // Draw OHLC in top corner
+  drawOHLC() {
+
+    // This can probably be optimized later on
+    this.ctx.fillStyle = '#444a9e'
+    this.ctx.fillText(`O`, 10, 20)
+    this.ctx.fillStyle = '#ffffff'
+    this.ctx.fillText(`29673.0`, 20, 20)
+
+    this.ctx.fillStyle = '#444a9e'
+    this.ctx.fillText(`H`, 70, 20)
+    this.ctx.fillStyle = '#ffffff'
+    this.ctx.fillText(`29673.0`, 80, 20)
+
+    this.ctx.fillStyle = '#444a9e'
+    this.ctx.fillText(`L`, 130, 20)
+    this.ctx.fillStyle = '#ffffff'
+    this.ctx.fillText(`29673.0`, 140, 20)
+
+    this.ctx.fillStyle = '#444a9e'
+    this.ctx.fillText(`C`, 190, 20)
+    this.ctx.fillStyle = '#ffffff'
+    this.ctx.fillText(`29673.0`, 200, 20)
+  }
+
   // Draws everything on main chart
   draw(e) {
     // Exit context
@@ -30,6 +55,9 @@ class OverlayRenderer {
 
     // Draw crosshair
     this.drawCrosshair(e);
+
+    // Draw OHLC
+    this.drawOHLC();
 
     // DRAW!!
     this.ctx.draw;
