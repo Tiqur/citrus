@@ -11,7 +11,9 @@ function Container() {
   let container_ref = useRef(0);
   let [canvasHeight, setCanvasHeight] = useState(0);
   let [canvasWidth, setCanvasWidth] = useState(0);
-  let [scaleCenter, setScaleCenter] = useState(29000);
+
+  // TODO: AUTO SCALE 
+  let [scaleCenter, setScaleCenter] = useState(100);
   let [scaleDelta, setScaleDelta] = useState(1000);
   
   useEffect(() => {

@@ -38,7 +38,7 @@ function Price_scale(props) {
         const currentY = event.clientY - rect.top;
         const scale = currentY > lastY ? 1.02 : 0.98;
         props.setScaleDelta(props.scaleDelta*scale);
-        setLastY(currentY)
+        setLastY(currentY);
       }
     }, false);
 

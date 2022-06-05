@@ -42,23 +42,29 @@ class ChartRenderer {
   // Draws candles
   drawCandles() {
     const bar_gap = 25;
+    const right_margin = 100;
+    const candleWidth = 21;
+    const wickOffset = Math.floor(candleWidth/2);
+
     for (let i = 0; i < this.data.length; i++) {
       const coords = this.barToCoordinates(this.data[i]);
       const accumulation = this.data[i].close >= this.data[i].open;
+
+      const xLoc = -i*bar_gap+this.canvasWidth-right_margin-candleWidth;
 
       // Set candle color
       this.ctx.fillStyle = accumulation ? "#ffffff" : "#5966e1"
 
       // Draw candle body
-      this.ctx.fillRect(i*bar_gap, coords.open, 21, coords.close-coords.open)
+      this.ctx.fillRect(xLoc, coords.open, 21, coords.close-coords.open)
 
       // Draw wicks
       if (accumulation) {
         //console.log(this.data[i], coords)
-        this.ctx.fillRect(i*bar_gap+10, coords.low, 1, coords.open-coords.close+coords.high-coords.low)
+        this.ctx.fillRect(xLoc+wickOffset, coords.low, 1, coords.open-coords.close+coords.high-coords.low)
         //console.log(coords)
       } else {
-        this.ctx.fillRect(i*bar_gap+10, coords.low, 1, coords.open-coords.close+coords.high-coords.low)
+        this.ctx.fillRect(xLoc+wickOffset, coords.low, 1, coords.open-coords.close+coords.high-coords.low)
       }
     }
   }
