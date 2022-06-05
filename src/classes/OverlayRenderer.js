@@ -74,7 +74,8 @@ class OverlayRenderer {
     // Draw OHLC
     this.drawOHLC();
 
-    //console.log(this.getPriceFromCoords(e));
+    // Draw price near crosshair
+    this.ctx.fillText(this.getPriceFromCoords(e), 10, this.canvasHeight-10)
 
     // DRAW!!
     this.ctx.draw;
