@@ -13,7 +13,6 @@ class ChartRenderer {
 
   // Clears canvas
   clearCanvas() {
-    //ctx.clearRect(0, 0, canvas.width, canvas.heigth)
     this.ctx.fillStyle = this.backgroundColor;
     this.ctx.fillRect(0, 0, this.canvasWidth, this.canvasHeight);
     this.ctx.restore();
@@ -21,11 +20,11 @@ class ChartRenderer {
 
   // Convert data values to chart coordinates
   priceToCoordinates(value) {
-    const scaleMin = 0.0;
-    const scaleMax = 500.0;
-    const oldRange = (scaleMax - scaleMin)
-    const newRange = (this.canvasHeight - 0)
-    return (((value - scaleMin) * newRange) / oldRange) + 0;
+    const scaleMin = 29000.0;
+    const scaleMax = 30000.0;
+    const oldRange = scaleMax - scaleMin;
+    const newRange = -this.canvasHeight;
+    return Math.floor((((value - scaleMin) * newRange) / oldRange) + 0)+this.canvasHeight;
 
   }
 
@@ -40,6 +39,7 @@ class ChartRenderer {
 
   // Draws candles
   drawCandles() {
+    const bar_gap = 25;
     for (let i = 0; i < this.data.length; i++) {
       const coords = this.barToCoordinates(this.data[i]);
       const accumulation = this.data[i].close >= this.data[i].open;
@@ -48,15 +48,14 @@ class ChartRenderer {
       this.ctx.fillStyle = accumulation ? "#ffffff" : "#5966e1"
 
       // Draw candle body
-      this.ctx.fillRect(i*15, coords.open, 10, coords.close-coords.open)
+      this.ctx.fillRect(i*bar_gap, coords.open, 21, coords.close-coords.open)
 
       // Draw wicks
       if (accumulation) {
-        this.ctx.fillRect(i*15+4.5, coords.close, 0.4, coords.high-coords.close)
-        this.ctx.fillRect(i*15+4.5, coords.open, 0.4, coords.low-coords.open)
+        //console.log(this.data[i], coords)
+        this.ctx.fillRect(i*bar_gap+10, coords.low, 1, coords.open-coords.close+coords.high-coords.low)
       } else {
-        this.ctx.fillRect(i*15+4.5, coords.open, 0.4, coords.high-coords.open)
-        this.ctx.fillRect(i*15+4.5, coords.close, 0.4, coords.low-coords.close)
+        this.ctx.fillRect(i*bar_gap+10, coords.low, 1, coords.open-coords.close+coords.high-coords.low)
       }
     }
   }

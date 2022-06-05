@@ -39,10 +39,17 @@ function gen() {
   return ohlc;
 }
 
-for (let i=0; i<100; i++) {
+for (let i=0; i<0; i++) {
   bars.push(new Bar(...gen()))
 }
 
+bars.push(new Bar(0, 29661.9, 29666.6, 29592.4, 29655.2))
+bars.push(new Bar(0, 29655.3, 29661.4, 29630.5, 29642.4))
+bars.push(new Bar(0, 29642.5, 29658.9, 29638.3, 29641.0))
+bars.push(new Bar(0, 29641.0, 29687.3, 29592.4, 29686.0))
+bars.push(new Bar(0, 29685.9, 29714.0, 29664.5, 29682.1))
+bars.push(new Bar(0, 29682.1, 29690.3, 29654.9, 29672.9))
+bars.push(new Bar(0, 29673.0, 29700.0, 29671.7, 29682.0))
 // TEMP FOR TESTING
 // TEMP FOR TESTING
 // TEMP FOR TESTING
@@ -64,7 +71,7 @@ function Chart(props) {
 
     // Chart
     const chartCanvas = chartRef.current
-    const chartCtx = chartCanvas.getContext('2d')
+    const chartCtx = chartCanvas.getContext('2d', {alpha: false})
 
     // Panning and zoom variables
     let isDragging = false;
