@@ -65,7 +65,9 @@ function Chart(props) {
 
     function onWheel(e) {
       const up = event.deltaY < 0;
-      props.setCandleWidth(up ? props.candleWidth+1 : props.candleWidth-1)
+      const zoomIn = props.candleWidth + (props.candleWidth >= 100 ? 0 : 1);
+      const zoomOut = props.candleWidth - (props.candleWidth <= 3 ? 0 : 1);
+      props.setCandleWidth(up ? zoomIn : zoomOut)
 
       props.chartRenderer.draw();
       props.overlayRenderer.draw(e);
