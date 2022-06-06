@@ -44,9 +44,7 @@ class OverlayRenderer {
 
   // Draw crosshair
   drawCrosshair(e) {
-    console.log(this.ctx)
-    const ctxOffsetX = this.ctx.mozCurrentTransformInverse[4];
-    const ctxOffsetY = this.ctx.mozCurrentTransformInverse[5];
+    const [ctxOffsetX, ctxOffsetY] = [-this.ctx.getTransform().e, -this.ctx.getTransform().f]
     const middleOfCandle = this.convertToDateAxis(e.offsetX+ctxOffsetX);
 
     // Draw vertical and horizontal lines
