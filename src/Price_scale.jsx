@@ -37,13 +37,15 @@ function Price_scale(props) {
     canvas.addEventListener('mousedown', handleMouseDown);
     canvas.addEventListener('mouseup', handleMouseUp);
     canvas.addEventListener('mousemove', () => handleMouseMove(canvas));
+    canvas.addEventListener('mouseout', handleMouseUp);
 
     return () => {
       canvas.removeEventListener('mousedown', handleMouseDown);
       canvas.removeEventListener('mouseup', handleMouseUp);
       canvas.removeEventListener('mousemove', () => handleMouseMove(canvas));
+      canvas.removeEventListener('mouseout', handleMouseUp);
     }
-  }, [])
+  }, [handleMouseDown, handleMouseUp, handleMouseMove])
 
   return (
     <canvas ref={canvasRef} width={width} height={height}/>

@@ -64,8 +64,8 @@ function Chart(props) {
     } 
 
     function onWheel(e) {
-      const zoom = event.deltaY < 0 ? 1.1 : 0.9;
-      props.setCandleWidth(props.candleWidth*zoom)
+      const up = event.deltaY < 0;
+      props.setCandleWidth(up ? props.candleWidth+1 : props.candleWidth-1)
 
       props.chartRenderer.draw();
       props.overlayRenderer.draw(e);
