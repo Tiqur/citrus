@@ -49,6 +49,7 @@ function Chart(props) {
       currentTransformedCursor = getTransformedPoint(chartCtx, e.offsetX, e.offsetY);
       if (isDragging) {
         chartCtx.translate(currentTransformedCursor.x - dragStartPosition.x, currentTransformedCursor.y - dragStartPosition.y)
+        overlayCtx.translate(currentTransformedCursor.x - dragStartPosition.x, currentTransformedCursor.y - dragStartPosition.y)
         overlayCanvas.style.cursor='grab';
         // Draw chart
         props.chartRenderer.draw();

@@ -17,7 +17,7 @@ class OverlayRenderer {
   }
 
   // Convert cursor X coordinates 
-  convertToDateAxis(e) {
+  convertToDateAxis(xPos) {
     const wickOffset = Math.floor(this.candleWidth/2);
     const bar_gap = Math.floor(this.candleWidth*1.2);
 
@@ -35,7 +35,7 @@ class OverlayRenderer {
         const middle = coords.time + Math.floor((this.candleWidth-bar_gap)/2);
 
         // Middle of candlestick
-        if (e.offsetX > middle) {
+        if (xPos > middle) {
           this.barHover = this.data[i];
           return coords.time+wickOffset;
         }
@@ -44,7 +44,10 @@ class OverlayRenderer {
 
   // Draw crosshair
   drawCrosshair(e) {
-    const middleOfCandle = this.convertToDateAxis(e);
+    console.log(this.ctx)
+    const ctxOffsetX = this.ctx.mozCurrentTransformInverse[4];
+    const ctxOffsetY = this.ctx.mozCurrentTransformInverse[5];
+    const middleOfCandle = this.convertToDateAxis(e.offsetX+ctxOffsetX);
 
     // Draw vertical and horizontal lines
     this.ctx.strokeStyle = '#ffffff'
@@ -53,17 +56,14 @@ class OverlayRenderer {
     this.ctx.setLineDash([6, 6])
 
     // Vertical
-    this.ctx.moveTo(middleOfCandle, 0);
-    this.ctx.lineTo(middleOfCandle, this.canvasHeight);
+    this.ctx.moveTo(middleOfCandle, ctxOffsetY);
+    this.ctx.lineTo(middleOfCandle, this.canvasHeight+ctxOffsetY);
     this.ctx.stroke();
 
     // Horizontal
-    this.ctx.moveTo(0, e.offsetY);
-    this.ctx.lineTo(this.canvasWidth, e.offsetY);
+    this.ctx.moveTo(ctxOffsetX, e.offsetY+ctxOffsetY);
+    this.ctx.lineTo(this.canvasWidth+ctxOffsetX, e.offsetY+ctxOffsetY);
     this.ctx.stroke();
-    
-    //this.ctx.fillRect(e.offsetX-this.canvasWidth, e.offsetY, this.canvasWidth*2, 1)
-    //this.ctx.fillRect(middleOfCandle, e.offsetY-this.canvasHeight, 1, this.canvasHeight*2)
   }
 
   // Get price from cursor coordinates
