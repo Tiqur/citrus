@@ -1,6 +1,7 @@
 class OverlayRenderer {
   constructor() {
     this.ctx;
+    this.candleWidth;
     this.canvasWidth;
     this.canvasHeight;
     this.scaleCenter = 0;
@@ -13,12 +14,37 @@ class OverlayRenderer {
     this.ctx.restore();
   }
 
+  // Convert cursor X coordinates 
+  convertToDateAxis(e) {
+    const bar_gap = Math.floor(this.candleWidth*1.2);
+    const bar_gapd2 = Math.floor(bar_gap/2);
+    for (let i = 0; i < 100; i++) {
+        const xLoc = -i*bar_gap+this.canvasWidth-100-this.candleWidth-bar_gapd2+this.candleWidth/2;
+
+        // For debugging
+        // Between candlesticks
+        //if (e.offsetX > xLoc) this.ctx.fillStyle = '#444a9e'
+        //if (e.offsetX < xLoc) this.ctx.fillStyle = '#ffffff'
+        //this.ctx.fillRect(xLoc, 0, 1, this.canvasHeight)
+
+        // Middle of candlestick
+        const xLocAfter = (-i+1)*bar_gap+this.canvasWidth-100-this.candleWidth-bar_gapd2+this.candleWidth/2;
+        if (e.offsetX > xLoc && e.offsetX < xLocAfter) {
+          // Debugging
+          //this.ctx.fillRect(xLoc+bar_gapd2, 0, 1, this.canvasHeight)
+          return xLoc+bar_gapd2;
+        }
+    }
+    //cause error so I dont forget where to code
+  }
+
   // Draw crosshair
   drawCrosshair(e) {
     // Draw vertical and horizontal lines
     this.ctx.fillStyle = '#444a9e'
+    const middleOfCandle = this.convertToDateAxis(e);
     this.ctx.fillRect(e.offsetX-this.canvasWidth, e.offsetY, this.canvasWidth*2, 1)
-    this.ctx.fillRect(e.offsetX, e.offsetY-this.canvasHeight, 1, this.canvasHeight*2)
+    this.ctx.fillRect(middleOfCandle, e.offsetY-this.canvasHeight, 1, this.canvasHeight*2)
   }
 
   // Get price from cursor coordinates
@@ -68,6 +94,8 @@ class OverlayRenderer {
     // Clear canvas
     this.clearCanvas();
 
+    this.convertToDateAxis(e);
+
     // Draw crosshair
     this.drawCrosshair(e);
 
@@ -106,6 +134,10 @@ class OverlayRenderer {
     this.ctx = ctx;
   }
 
+  // Set candleWidth
+  setCandleWidth(candleWidth) {
+    this.candleWidth = candleWidth;
+  }
   setScaleDelta(value) {
     this.scaleDelta = value;
   }

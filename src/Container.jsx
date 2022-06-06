@@ -91,6 +91,7 @@ function Container(props) {
 
   useEffect(() => {
     chartRenderer.setCandleWidth(candleWidth);
+    overlayRenderer.setCandleWidth(candleWidth);
   }, [candleWidth])
 
 
