@@ -67,8 +67,8 @@ function Container(props) {
 
   // First load
   useEffect(() => {
-    setCanvasHeight(container_ref.current.clientHeight-80)
-    setCanvasWidth(container_ref.current.clientWidth-40)
+    setCanvasHeight(container_ref.current.clientHeight-40-40)
+    setCanvasWidth(container_ref.current.clientWidth-40-60)
     setData(bars);
   }, [])
 
