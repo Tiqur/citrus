@@ -76,6 +76,14 @@ function Chart(props) {
     overlayCanvas.addEventListener('mouseup', mouseUp);
     overlayCanvas.addEventListener('mouseout', mouseUp);
     overlayCanvas.addEventListener('wheel', onWheel);
+
+    return () => {
+      overlayCanvas.removeEventListener('mousedown', mouseDown);
+      overlayCanvas.removeEventListener('mousemove', mouseMove);
+      overlayCanvas.removeEventListener('mouseup', mouseUp);
+      overlayCanvas.removeEventListener('mouseout', mouseUp);
+      overlayCanvas.removeEventListener('wheel', onWheel);
+    }
   })
 
   return (

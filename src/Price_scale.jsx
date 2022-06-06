@@ -41,9 +41,9 @@ function Price_scale(props) {
     return () => {
       canvas.removeEventListener('mousedown', handleMouseDown);
       canvas.removeEventListener('mouseup', handleMouseUp);
-      canvas.removeEventListener('mousemove', handleMouseMove);
+      canvas.removeEventListener('mousemove', () => handleMouseMove(canvas));
     }
-  }, [handleMouseDown, handleMouseUp, handleMouseMove])
+  }, [])
 
   return (
     <canvas ref={canvasRef} width={width} height={height}/>
