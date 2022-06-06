@@ -1,7 +1,4 @@
 import { useRef, useEffect, useState, setState } from 'react';
-import ChartRenderer from './classes/ChartRenderer.js';
-import OverlayRenderer from './classes/OverlayRenderer.js';
-import Bar from './classes/Bar.js';
 
 function getTransformedPoint(ctx, x, y) {
     const transform = ctx.getTransform();
@@ -11,51 +8,6 @@ function getTransformedPoint(ctx, x, y) {
     const transformedY = inverseZoom * y - inverseZoom * transform.f;
     return { x: transformedX, y: transformedY };
 }
-
-// TEMP FOR TESTING
-// TEMP FOR TESTING
-// TEMP FOR TESTING
-// TEMP FOR TESTING
-let last = [0, 169, 420, 121, 321];
-const bars = [];
-
-function getRandomArbitrary(min, max) {
-  return Math.floor(Math.random() * (max - min) + min)
-}
-
-
-function gen() {
-  const open = last[4]
-  const high = getRandomArbitrary(open+1, open+100);
-  const low = getRandomArbitrary(open-1, open-100);
-  const close = getRandomArbitrary(open+100, open-100);
-
-  const ohlc = [
-    0, open, high, low, close
-  ]
-
-  last = ohlc;
-
-  return ohlc;
-}
-
-for (let i=0; i<10000; i++) {
-  bars.push(new Bar(...gen()))
-}
-
-//bars.push(new Bar(0, 29661.9, 29666.6, 29592.4, 29655.2))
-//bars.push(new Bar(0, 29655.3, 29661.4, 29630.5, 29642.4))
-//bars.push(new Bar(0, 29642.5, 29658.9, 29638.3, 29641.0))
-//bars.push(new Bar(0, 29641.0, 29687.3, 29592.4, 29686.0))
-//bars.push(new Bar(0, 29685.9, 29714.0, 29664.5, 29682.1))
-//bars.push(new Bar(0, 29682.1, 29690.3, 29654.9, 29672.9))
-//bars.push(new Bar(0, 29673.0, 29700.0, 29671.7, 29682.0))
-//bars.push(new Bar(0, 29999.0, 30000.0, 30000.0, 30001.0))
-// TEMP FOR TESTING
-// TEMP FOR TESTING
-// TEMP FOR TESTING
-// TEMP FOR TESTING
-
 
 
 function Chart(props) {
@@ -78,22 +30,15 @@ function Chart(props) {
     let dragStartPosition = {x: 0, y: 0};
     let currentTransformedCursor;
 
-    // Initialize Renderer Classes
-    const overlayRenderer = new OverlayRenderer(overlayCtx, canvasWidth, canvasHeight);
-    const chartRenderer = new ChartRenderer(chartCtx, 10, 50, '#151924', canvasWidth, canvasHeight, props.candleWidth);
-    chartRenderer.setData(bars);
+    // Set CTX
+    props.overlayRenderer.setCtx(overlayCtx);
+    props.chartRenderer.setCtx(chartCtx);
     
-    // TODO: Auto scale on first load later
-    chartRenderer.setScaleCenter(props.scaleCenter);
-    chartRenderer.setScaleDelta(props.scaleDelta);
-    overlayRenderer.setScaleCenter(props.scaleCenter);
-    overlayRenderer.setScaleDelta(props.scaleDelta);
-
     // Set overlay cursor style
     overlayCanvas.style.cursor='crosshair';
 
     // Draw chart on initial load
-    chartRenderer.draw();
+    props.chartRenderer.draw();
 
     function mouseDown(e) {
       isDragging=true;
@@ -106,11 +51,11 @@ function Chart(props) {
         chartCtx.translate(currentTransformedCursor.x - dragStartPosition.x, currentTransformedCursor.y - dragStartPosition.y)
         overlayCanvas.style.cursor='grab';
         // Draw chart
-        chartRenderer.draw();
+        props.chartRenderer.draw();
       }
 
       // Draw overlay
-      overlayRenderer.draw(e);
+      props.overlayRenderer.draw(e);
     }
 
     function mouseUp() {
@@ -121,14 +66,9 @@ function Chart(props) {
     function onWheel(e) {
       const zoom = event.deltaY < 0 ? 1.1 : 0.9;
       props.setCandleWidth(props.candleWidth*zoom)
-    
-      //chartCtx.translate(currentTransformedCursor.x, currentTransformedCursor.y);
-      //chartCtx.scale(zoom, zoom);
-      //chartCtx.translate(-currentTransformedCursor.x, -currentTransformedCursor.y);
-      //event.preventDefault();
 
-      chartRenderer.draw();
-      overlayRenderer.draw(e);
+      props.chartRenderer.draw();
+      props.overlayRenderer.draw(e);
     }
 
     overlayCanvas.addEventListener('mousedown', mouseDown);

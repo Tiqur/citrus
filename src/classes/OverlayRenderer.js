@@ -1,8 +1,8 @@
 class OverlayRenderer {
-  constructor(ctx, canvasWidth, canvasHeight) {
-    this.ctx = ctx;
-    this.canvasWidth = canvasWidth;
-    this.canvasHeight = canvasHeight;
+  constructor() {
+    this.ctx;
+    this.canvasWidth;
+    this.canvasHeight;
     this.scaleCenter = 0;
     this.scaleDelta = 0;
   }
@@ -89,6 +89,21 @@ class OverlayRenderer {
   // Adjusts chart scale
   setScaleCenter(value) {
     this.scaleCenter = value;
+  }
+
+  // Set canvas Width
+  setWidth(width) {
+    this.canvasWidth = width;
+  }
+
+  // Set canvas Width
+  setHeight(height) {
+    this.canvasHeight = height;
+  }
+
+  // Set ctx
+  setCtx(ctx) {
+    this.ctx = ctx;
   }
 
   setScaleDelta(value) {

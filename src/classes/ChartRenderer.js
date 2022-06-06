@@ -2,16 +2,15 @@ import { setState, useState } from 'react';
 import Bar from './Bar.js'
 
 class ChartRenderer {
-  constructor(ctx, barSpacing, barWidth, backgroundColor, canvasWidth, canvasHeight, candleWidth) {
-    this.ctx = ctx;
+  constructor(barSpacing, backgroundColor) {
     this.barSpacing = barSpacing;
-    this.barWidth = barWidth;
     this.backgroundColor = backgroundColor;
-    this.canvasWidth = canvasWidth;
-    this.canvasHeight = canvasHeight;
+    this.canvasWidth;
+    this.canvasHeight;
+    this.candleWidth;
     this.scaleCenter = 0;
     this.scaleDelta = 0;
-    this.candleWidth = candleWidth;
+    this.ctx;
     this.data = [];
   }
 
@@ -59,6 +58,7 @@ class ChartRenderer {
 
       // Draw candle body
       this.ctx.fillRect(xLoc, coords.open, candleWidth, coords.close-coords.open)
+      //console.log(xLoc, coords.open, candleWidth, coords.close-coords.open)
 
       // Draw wicks
       if (accumulation) {
@@ -96,6 +96,21 @@ class ChartRenderer {
     this.data = data;
   }
 
+  // Set ctx
+  setCtx(ctx) {
+    this.ctx = ctx;
+  }
+
+  // Set canvas Width
+  setWidth(width) {
+    this.canvasWidth = width;
+  }
+
+  // Set canvas Width
+  setHeight(height) {
+    this.canvasHeight = height;
+  }
+
   // Adjusts chart scale
   setScaleCenter(value) {
     this.scaleCenter = value;
@@ -103,6 +118,10 @@ class ChartRenderer {
 
   setScaleDelta(value) {
     this.scaleDelta = value;
+  }
+
+  setCandleWidth(value) {
+    this.candleWidth = value;
   }
 }
 
