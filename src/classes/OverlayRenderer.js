@@ -70,7 +70,7 @@ class OverlayRenderer {
     const scaleMax = this.scaleCenter+this.scaleDelta;
     const oldRange = scaleMax - scaleMin;
     const newRange = -this.canvasHeight;
-    return ((e.offsetY-this.canvasHeight-0)*oldRange)/newRange+scaleMin;
+    return ((e.offsetY-this.ctx.getTransform().f-this.canvasHeight-0)*oldRange)/newRange+scaleMin;
   }
 
   // Draw OHLC in top corner
@@ -98,6 +98,13 @@ class OverlayRenderer {
     this.ctx.fillText(this.barHover.close, 200+cX, 20+cY)
   }
 
+  drawPrice(e) {
+    const [cX, cY] = [-this.ctx.getTransform().e, -this.ctx.getTransform().f]
+
+    // Draw price near crosshair
+    this.ctx.fillText(this.getPriceFromCoords(e), 10+cX, this.canvasHeight-10+cY)
+  }
+
   // Draws everything on main chart
   draw(e) {
     // Exit context
@@ -115,8 +122,8 @@ class OverlayRenderer {
     // Draw OHLC
     this.drawOHLC();
 
-    // Draw price near crosshair
-    this.ctx.fillText(this.getPriceFromCoords(e), 10, this.canvasHeight-10)
+    // Draw price
+    this.drawPrice(e);
 
     // DRAW!!
     this.ctx.draw;
