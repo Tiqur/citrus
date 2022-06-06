@@ -44,11 +44,26 @@ class OverlayRenderer {
 
   // Draw crosshair
   drawCrosshair(e) {
-    // Draw vertical and horizontal lines
-    this.ctx.fillStyle = '#444a9e'
     const middleOfCandle = this.convertToDateAxis(e);
-    this.ctx.fillRect(e.offsetX-this.canvasWidth, e.offsetY, this.canvasWidth*2, 1)
-    this.ctx.fillRect(middleOfCandle, e.offsetY-this.canvasHeight, 1, this.canvasHeight*2)
+
+    // Draw vertical and horizontal lines
+    this.ctx.strokeStyle = '#ffffff'
+    this.ctx.lineWidth = 0.5;
+    this.ctx.beginPath();
+    this.ctx.setLineDash([6, 6])
+
+    // Vertical
+    this.ctx.moveTo(middleOfCandle, 0);
+    this.ctx.lineTo(middleOfCandle, this.canvasHeight);
+    this.ctx.stroke();
+
+    // Horizontal
+    this.ctx.moveTo(0, e.offsetY);
+    this.ctx.lineTo(this.canvasWidth, e.offsetY);
+    this.ctx.stroke();
+    
+    //this.ctx.fillRect(e.offsetX-this.canvasWidth, e.offsetY, this.canvasWidth*2, 1)
+    //this.ctx.fillRect(middleOfCandle, e.offsetY-this.canvasHeight, 1, this.canvasHeight*2)
   }
 
   // Get price from cursor coordinates
