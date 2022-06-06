@@ -59,15 +59,23 @@ function Container(props) {
   let [scaleCenter, setScaleCenter] = useState(100);
   let [scaleDelta, setScaleDelta] = useState(1000);
 
+  let [data, setData] = useState([]);
+
   const overlayRenderer = props.overlayRenderer;
   const chartRenderer = props.chartRenderer;
+
 
   // First load
   useEffect(() => {
     setCanvasHeight(container_ref.current.clientHeight-80)
     setCanvasWidth(container_ref.current.clientWidth-40)
-    chartRenderer.setData(bars);
+    setData(bars);
   }, [])
+
+  useEffect(() => {
+    chartRenderer.setData(bars);
+    overlayRenderer.setData(bars);
+  }, [data])
 
   // After canvas size is set
   useEffect(() => {
@@ -101,7 +109,7 @@ function Container(props) {
     <div className={styles.container} ref={container_ref}>  
       <Toolbar_top className={styles.toolbar_top}/>
       <Toolbar_side className={styles.toolbar_side}/>
-      <Chart className={styles.chart} overlayRenderer={overlayRenderer} chartRenderer={chartRenderer} candleWidth={candleWidth} setCandleWidth={setCandleWidth} scaleDelta={scaleDelta} scaleCenter={scaleCenter} width={canvasWidth} height={canvasHeight}/>
+      <Chart className={styles.chart} setData={setData} overlayRenderer={overlayRenderer} chartRenderer={chartRenderer} candleWidth={candleWidth} setCandleWidth={setCandleWidth} scaleDelta={scaleDelta} scaleCenter={scaleCenter} width={canvasWidth} height={canvasHeight}/>
       <Price_scale className={styles.price_scale} scaleDelta={scaleDelta} setScaleDelta={setScaleDelta} height={canvasHeight}/>
       <Time_scale className={styles.time_scale} width={canvasWidth}/>
       <div className={styles.corner1}/>

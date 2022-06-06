@@ -1,6 +1,7 @@
 class OverlayRenderer {
   constructor() {
     this.ctx;
+    this.data;
     this.candleWidth;
     this.canvasWidth;
     this.canvasHeight;
@@ -16,26 +17,27 @@ class OverlayRenderer {
 
   // Convert cursor X coordinates 
   convertToDateAxis(e) {
+    const wickOffset = Math.floor(this.candleWidth/2);
     const bar_gap = Math.floor(this.candleWidth*1.2);
-    const bar_gapd2 = Math.floor(bar_gap/2);
-    for (let i = 0; i < 100; i++) {
-        const xLoc = -i*bar_gap+this.canvasWidth-100-this.candleWidth-bar_gapd2+this.candleWidth/2;
 
-        // For debugging
-        // Between candlesticks
-        //if (e.offsetX > xLoc) this.ctx.fillStyle = '#444a9e'
-        //if (e.offsetX < xLoc) this.ctx.fillStyle = '#ffffff'
-        //this.ctx.fillRect(xLoc, 0, 1, this.canvasHeight)
+    // FOR DEBUGGING ( between candlesticks )
+    //for (let i = 0; i < this.data.length; i++) {
+    //    const coords = this.data[i].coords;
+    //    const middle = coords.time+Math.floor((this.candleWidth-bar_gap)/2);
+    //    if (e.offsetX > middle) this.ctx.fillStyle = '#444a9e'
+    //    if (e.offsetX < middle) this.ctx.fillStyle = '#ffffff'
+    //    this.ctx.fillRect(middle, 0, 1, this.canvasHeight)
+    //}
+
+    for (let i = 0; i < this.data.length; i++) {
+        const coords = this.data[i].coords;
+        const middle = coords.time + Math.floor((this.candleWidth-bar_gap)/2);
 
         // Middle of candlestick
-        const xLocAfter = (-i+1)*bar_gap+this.canvasWidth-100-this.candleWidth-bar_gapd2+this.candleWidth/2;
-        if (e.offsetX > xLoc && e.offsetX < xLocAfter) {
-          // Debugging
-          //this.ctx.fillRect(xLoc+bar_gapd2, 0, 1, this.canvasHeight)
-          return xLoc+bar_gapd2;
+        if (e.offsetX > middle) {
+          return coords.time+wickOffset;
         }
     }
-    //cause error so I dont forget where to code
   }
 
   // Draw crosshair
@@ -53,11 +55,7 @@ class OverlayRenderer {
     const scaleMax = this.scaleCenter+this.scaleDelta;
     const oldRange = scaleMax - scaleMin;
     const newRange = -this.canvasHeight;
-    //return ((((value - scaleMin) * newRange) / oldRange) + 0)+this.canvasHeight;
-
     return ((e.offsetY-this.canvasHeight-0)*oldRange)/newRange+scaleMin;
-
-    //console.log(e.offsetY, this.canvasHeight)
   }
 
   // Draw OHLC in top corner
@@ -132,6 +130,11 @@ class OverlayRenderer {
   // Set ctx
   setCtx(ctx) {
     this.ctx = ctx;
+  }
+
+  // Set data
+  setData(data) {
+    this.data = data;
   }
 
   // Set candleWidth

@@ -58,7 +58,6 @@ class ChartRenderer {
 
       // Draw candle body
       this.ctx.fillRect(xLoc, coords.open, candleWidth, coords.close-coords.open)
-      //console.log(xLoc, coords.open, candleWidth, coords.close-coords.open)
 
       // Draw wicks
       if (accumulation) {
@@ -68,6 +67,8 @@ class ChartRenderer {
       } else {
         this.ctx.fillRect(xLoc+wickOffset, coords.low, wickWidth, coords.open-coords.close+coords.high-coords.low)
       }
+
+      this.data[i].setCoords({time: xLoc, open: coords.open, high: coords.high, low: coords.low, close: coords.close})
     }
   }
 
