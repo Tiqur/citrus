@@ -5,6 +5,7 @@ class OverlayRenderer {
     this.candleWidth;
     this.canvasWidth;
     this.canvasHeight;
+    this.barHover; // What bar is being hovered over atm
     this.scaleCenter = 0;
     this.scaleDelta = 0;
   }
@@ -35,6 +36,7 @@ class OverlayRenderer {
 
         // Middle of candlestick
         if (e.offsetX > middle) {
+          this.barHover = this.data[i];
           return coords.time+wickOffset;
         }
     }
@@ -60,27 +62,26 @@ class OverlayRenderer {
 
   // Draw OHLC in top corner
   drawOHLC() {
-
     // TODO: This can probably be optimized later on
     this.ctx.fillStyle = '#444a9e'
     this.ctx.fillText(`O`, 10, 20)
     this.ctx.fillStyle = '#ffffff'
-    this.ctx.fillText(`29673.0`, 20, 20)
+    this.ctx.fillText(this.barHover.open, 20, 20)
 
     this.ctx.fillStyle = '#444a9e'
     this.ctx.fillText(`H`, 70, 20)
     this.ctx.fillStyle = '#ffffff'
-    this.ctx.fillText(`29673.0`, 80, 20)
+    this.ctx.fillText(this.barHover.high, 80, 20)
 
     this.ctx.fillStyle = '#444a9e'
     this.ctx.fillText(`L`, 130, 20)
     this.ctx.fillStyle = '#ffffff'
-    this.ctx.fillText(`29673.0`, 140, 20)
+    this.ctx.fillText(this.barHover.low, 140, 20)
 
     this.ctx.fillStyle = '#444a9e'
     this.ctx.fillText(`C`, 190, 20)
     this.ctx.fillStyle = '#ffffff'
-    this.ctx.fillText(`29673.0`, 200, 20)
+    this.ctx.fillText(this.barHover.close, 200, 20)
   }
 
   // Draws everything on main chart
