@@ -59,14 +59,8 @@ class ChartRenderer {
       // Draw candle body
       this.ctx.fillRect(xLoc, coords.open, candleWidth, coords.close-coords.open)
 
-      // Draw wicks
-      if (accumulation) {
-        //console.log(this.data[i], coords)
-        this.ctx.fillRect(xLoc+wickOffset, coords.low, wickWidth, coords.open-coords.close+coords.high-coords.low)
-        //console.log(coords)
-      } else {
-        this.ctx.fillRect(xLoc+wickOffset, coords.low, wickWidth, coords.open-coords.close+coords.high-coords.low)
-      }
+      // Draw candle wick
+      this.ctx.fillRect(xLoc+wickOffset, coords.low, wickWidth, coords.open-coords.close+coords.high-coords.low)
 
       this.data[i].setCoords({time: xLoc, open: coords.open, high: coords.high, low: coords.low, close: coords.close})
     }

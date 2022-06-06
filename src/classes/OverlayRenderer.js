@@ -75,26 +75,27 @@ class OverlayRenderer {
 
   // Draw OHLC in top corner
   drawOHLC() {
+    const [cX, cY] = [-this.ctx.getTransform().e, -this.ctx.getTransform().f]
     // TODO: This can probably be optimized later on
     this.ctx.fillStyle = '#444a9e'
-    this.ctx.fillText(`O`, 10, 20)
+    this.ctx.fillText(`O`, 10+cX, 20+cY)
     this.ctx.fillStyle = '#ffffff'
-    this.ctx.fillText(this.barHover.open, 20, 20)
+    this.ctx.fillText(this.barHover.open, 20+cX, 20+cY)
 
     this.ctx.fillStyle = '#444a9e'
-    this.ctx.fillText(`H`, 70, 20)
+    this.ctx.fillText(`H`, 70+cX, 20+cY)
     this.ctx.fillStyle = '#ffffff'
-    this.ctx.fillText(this.barHover.high, 80, 20)
+    this.ctx.fillText(this.barHover.high, 80+cX, 20+cY)
 
     this.ctx.fillStyle = '#444a9e'
-    this.ctx.fillText(`L`, 130, 20)
+    this.ctx.fillText(`L`, 130+cX, 20+cY)
     this.ctx.fillStyle = '#ffffff'
-    this.ctx.fillText(this.barHover.low, 140, 20)
+    this.ctx.fillText(this.barHover.low, 140+cX, 20+cY)
 
     this.ctx.fillStyle = '#444a9e'
-    this.ctx.fillText(`C`, 190, 20)
+    this.ctx.fillText(`C`, 190+cX, 20+cY)
     this.ctx.fillStyle = '#ffffff'
-    this.ctx.fillText(this.barHover.close, 200, 20)
+    this.ctx.fillText(this.barHover.close, 200+cX, 20+cY)
   }
 
   // Draws everything on main chart
