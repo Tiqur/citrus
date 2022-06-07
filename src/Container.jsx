@@ -122,6 +122,10 @@ function Container(props) {
   }, [candleWidth])
 
 
+  // Disable drawing mode and all tools
+  function disableDrawingMode() {
+    setMeasureTool(false);
+  }
 
 
   
@@ -130,18 +134,26 @@ function Container(props) {
       <Toolbar_top className={styles.toolbar_top}/>
       <Toolbar_side className={styles.toolbar_side}>
         <div>
+          <div onClick={() => {disableDrawingMode()}}>
+            <svg viewBox='0 0 28 28' width='28' height='28'>
+              <g fill={!drawingMode ? '#1E53E5' : '#ffffff'} fillRule='evenodd'>
+                <path d="M18 15h8v-1h-8z"/>
+                <path d="M14 18v8h1v-8zM14 3v8h1v-8zM3 15h8v-1h-8z"/>
+              </g>
+            </svg>
+          </div>
+          <div onClick={() => {setMeasureTool(!measureTool)}}>
+            <svg viewBox='0 0 28 28' width='28' height='28'>
+              <g fill={measureTool ? '#1E53E5' : '#ffffff'} fillRule='evenodd'>
+                <path d="M2 9.75a1.5 1.5 0 0 0-1.5 1.5v5.5a1.5 1.5 0 0 0 1.5 1.5h24a1.5 1.5 0 0 0 1.5-1.5v-5.5a1.5 1.5 0 0 0-1.5-1.5zm0 1h3v2.5h1v-2.5h3.25v3.9h1v-3.9h3.25v2.5h1v-2.5h3.25v3.9h1v-3.9H22v2.5h1v-2.5h3a.5.5 0 0 1 .5.5v5.5a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5v-5.5a.5.5 0 0 1 .5-.5z" transform="rotate(-45 14 14)"/>
+              </g>
+            </svg>
+          </div>
           <div onClick={() => {setMagnetMode(!magnetMode)}} style={{background: magnetMode ? '#1E53E5' : ''}}>
             <svg viewBox='0 0 28 28' width='28' height='28'>
               <g fill='#ffffff' fillRule='evenodd'>
                 <path d="M14 10a2 2 0 0 0-2 2v11H6V12c0-4.416 3.584-8 8-8s8 3.584 8 8v11h-6V12a2 2 0 0 0-2-2zm-3 2a3 3 0 0 1 6 0v10h4V12c0-3.864-3.136-7-7-7s-7 3.136-7 7v10h4V12z"/>
                 <path d="M6.5 18h5v1h-5zm10 0h5v1h-5z"/>
-              </g>
-            </svg>
-          </div>
-          <div onClick={() => {setMeasureTool(!measureTool)}} style={{background: measureTool ? '#1E53E5' : ''}}>
-            <svg viewBox='0 0 28 28' width='28' height='28'>
-              <g fill='#ffffff' fillRule='evenodd'>
-                <path d="M2 9.75a1.5 1.5 0 0 0-1.5 1.5v5.5a1.5 1.5 0 0 0 1.5 1.5h24a1.5 1.5 0 0 0 1.5-1.5v-5.5a1.5 1.5 0 0 0-1.5-1.5zm0 1h3v2.5h1v-2.5h3.25v3.9h1v-3.9h3.25v2.5h1v-2.5h3.25v3.9h1v-3.9H22v2.5h1v-2.5h3a.5.5 0 0 1 .5.5v5.5a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5v-5.5a.5.5 0 0 1 .5-.5z" transform="rotate(-45 14 14)"/>
               </g>
             </svg>
           </div>
