@@ -60,7 +60,7 @@ class ChartRenderer {
       this.ctx.fillRect(xLoc, coords.open, candleWidth, coords.close-coords.open)
 
       // Draw candle wick
-      this.ctx.fillRect(xLoc+wickOffset, coords.low, wickWidth, coords.open-coords.close+coords.high-coords.low)
+      this.ctx.fillRect(xLoc+wickOffset, coords.low, wickWidth, coords.high-coords.low)
 
       this.data[i].setCoords({time: xLoc, open: coords.open, high: coords.high, low: coords.low, close: coords.close})
     }

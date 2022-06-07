@@ -46,7 +46,7 @@ class OverlayRenderer {
 
   // Return mouse X pos or middle of candle ( if any )
   getCrosshairX(e) {
-    const ctxOffsetX= -this.ctx.getTransform().e
+    const ctxOffsetX = -this.ctx.getTransform().e
     const middleOfCandle = this.convertToDateAxis(e.offsetX+ctxOffsetX);
     return middleOfCandle || e.offsetX+ctxOffsetX;
   }
@@ -67,16 +67,18 @@ class OverlayRenderer {
       const accumulation = this.barHover.open >= this.barHover.close;
 
       // Debugging
-      //this.ctx.fillStyle = '#32CD32'
+      this.ctx.fillStyle = '#32CD32'
+      const ctxOffsetX = -this.ctx.getTransform().e
+      const middleOfCandle = this.convertToDateAxis(e.offsetX+ctxOffsetX);
       //this.ctx.fillRect(middleOfCandle-20, this.barHover.coords.open, 40, 2);
       //this.ctx.fillRect(middleOfCandle-20, this.barHover.coords.high, 40, 2);
       //this.ctx.fillRect(middleOfCandle-20, this.barHover.coords.low, 40, 2);
       //this.ctx.fillRect(middleOfCandle-20, this.barHover.coords.close, 40, 2);
-      //this.ctx.fillStyle = '#ff0000'
-      //this.ctx.fillRect(middleOfCandle-20, middleTop, 40, 2);
-      //this.ctx.fillRect(middleOfCandle-20, middleBottom, 40, 2);
-      //this.ctx.fillStyle = '#32CD32'
-      //this.ctx.fillRect(middleOfCandle-20, middle, 40, 2);
+      this.ctx.fillStyle = '#ff0000'
+      this.ctx.fillRect(middleOfCandle-20, middleTop, 40, 2);
+      this.ctx.fillRect(middleOfCandle-20, middleBottom, 40, 2);
+      this.ctx.fillStyle = '#32CD32'
+      this.ctx.fillRect(middleOfCandle-20, middle, 40, 2);
 
       if (mouseYPos <= middleTop) {
         y = this.barHover.coords.high;
