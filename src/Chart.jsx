@@ -37,9 +37,6 @@ function Chart(props) {
     // Set overlay cursor style
     overlayCanvas.style.cursor='crosshair';
 
-    // Draw chart on initial load
-    props.chartRenderer.draw();
-
     function mouseDown(e) {
       isDragging=true;
       dragStartPosition = getTransformedPoint(chartCtx, e.offsetX, e.offsetY)

@@ -91,6 +91,9 @@ function Container(props) {
     chartRenderer.setHeight(canvasHeight);
     overlayRenderer.setWidth(canvasWidth);
     overlayRenderer.setHeight(canvasHeight);
+
+    // Draw on initial load
+    chartRenderer.draw();
   }, [canvasWidth, canvasHeight])
 
   // TODO: Auto scale on first load later
