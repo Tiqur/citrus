@@ -61,24 +61,24 @@ class OverlayRenderer {
     this.magnetMode = true;
 
     if (this.magnetMode && this.barHover) {
-      const middleTop = this.barHover.coords.high-(this.barHover.coords.high-this.barHover.coords.open)/2;
-      const middleBottom = this.barHover.coords.low-(this.barHover.coords.low-this.barHover.coords.close)/2;
-      const middle = this.barHover.coords.close-(this.barHover.coords.close-this.barHover.coords.open)/2;
       const accumulation = this.barHover.open >= this.barHover.close;
+      const middleTop = this.barHover.coords.high-(this.barHover.coords.high-(accumulation ? this.barHover.coords.open : this.barHover.coords.close))/2;
+      const middleBottom = this.barHover.coords.low-(this.barHover.coords.low-(accumulation ? this.barHover.coords.close : this.barHover.coords.open))/2;
+      const middle = this.barHover.coords.close-(this.barHover.coords.close-this.barHover.coords.open)/2;
 
       // Debugging
-      this.ctx.fillStyle = '#32CD32'
-      const ctxOffsetX = -this.ctx.getTransform().e
-      const middleOfCandle = this.convertToDateAxis(e.offsetX+ctxOffsetX);
+      //this.ctx.fillStyle = '#32CD32'
+      //const ctxOffsetX = -this.ctx.getTransform().e
+      //const middleOfCandle = this.convertToDateAxis(e.offsetX+ctxOffsetX);
       //this.ctx.fillRect(middleOfCandle-20, this.barHover.coords.open, 40, 2);
       //this.ctx.fillRect(middleOfCandle-20, this.barHover.coords.high, 40, 2);
       //this.ctx.fillRect(middleOfCandle-20, this.barHover.coords.low, 40, 2);
       //this.ctx.fillRect(middleOfCandle-20, this.barHover.coords.close, 40, 2);
-      this.ctx.fillStyle = '#ff0000'
-      this.ctx.fillRect(middleOfCandle-20, middleTop, 40, 2);
-      this.ctx.fillRect(middleOfCandle-20, middleBottom, 40, 2);
-      this.ctx.fillStyle = '#32CD32'
-      this.ctx.fillRect(middleOfCandle-20, middle, 40, 2);
+      //this.ctx.fillStyle = '#ff0000'
+      //this.ctx.fillRect(middleOfCandle-20, middleTop, 40, 2);
+      //this.ctx.fillRect(middleOfCandle-20, middleBottom, 40, 2);
+      //this.ctx.fillStyle = '#32CD32'
+      //this.ctx.fillRect(middleOfCandle-20, middle, 40, 2);
 
       if (mouseYPos <= middleTop) {
         y = this.barHover.coords.high;
