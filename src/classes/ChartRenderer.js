@@ -117,6 +117,7 @@ class ChartRenderer {
 
   setCandleWidth(value) {
     this.candleWidth = value;
+    this.draw();
   }
 }
 

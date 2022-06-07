@@ -167,13 +167,15 @@ class OverlayRenderer {
     // Clear canvas
     this.clearCanvas();
 
+    // Draw OHLC
+    this.drawOHLC();
+
+    if (!e) return this.ctx.draw;
+
     this.convertToDateAxis(e);
 
     // Draw crosshair
     this.drawCrosshair(e);
-
-    // Draw OHLC
-    this.drawOHLC();
 
     // Draw price
     this.drawPrice(e);
@@ -223,6 +225,7 @@ class OverlayRenderer {
   // Set candleWidth
   setCandleWidth(candleWidth) {
     this.candleWidth = candleWidth;
+    this.draw();
   }
   setScaleDelta(value) {
     this.scaleDelta = value;

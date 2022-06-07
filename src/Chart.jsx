@@ -65,7 +65,6 @@ function Chart(props) {
         // Draw chart
         props.chartRenderer.draw();
       }
-
       // Draw overlay
       props.overlayRenderer.draw(e);
     }
