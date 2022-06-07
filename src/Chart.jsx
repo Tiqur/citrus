@@ -54,6 +54,11 @@ function Chart(props) {
     function mouseDown(e) {
       isDragging=true;
       dragStartPosition = getTransformedPoint(chartCtx, e.offsetX, e.offsetY)
+
+      if (props.drawingMode) {
+        const [ctxOffsetX, ctxOffsetY] = [-chartCtx.getTransform().e, -chartCtx.getTransform().f];
+        console.log({x: e.clientX+ctxOffsetX, y: e.clientY+ctxOffsetY})
+      }
     }
 
     function mouseMove(e) {

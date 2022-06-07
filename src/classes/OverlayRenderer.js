@@ -1,3 +1,5 @@
+import timestamp from 'unix-timestamp'
+
 class OverlayRenderer {
   constructor() {
     this.ctx;
@@ -156,6 +158,7 @@ class OverlayRenderer {
 
     // Draw price near crosshair
     this.ctx.fillText(this.getPriceFromCoords(e), 10+cX, this.canvasHeight-10+cY)
+    this.ctx.fillText(timestamp.toDate(this.barHover.time), 10+cX, this.canvasHeight-25+cY)
   }
 
   // Draws everything on main chart
