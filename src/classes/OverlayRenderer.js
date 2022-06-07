@@ -6,6 +6,7 @@ class OverlayRenderer {
     this.canvasWidth;
     this.canvasHeight;
     this.magnetMode;
+    this.measureTool;
     this.barHover; // What bar is being hovered over atm
     this.scaleCenter = 0;
     this.scaleDelta = 0;
@@ -208,6 +209,10 @@ class OverlayRenderer {
 
   setMagnetMode(magnetMode) {
     this.magnetMode = magnetMode;
+  }
+
+  setMeasureTool(measureTool) {
+    this.measureTool = measureTool;
   }
 
   // Set data

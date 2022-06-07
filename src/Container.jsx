@@ -63,6 +63,7 @@ function Container(props) {
 
   // TODO: Add button / hotkey
   let [magnetMode, setMagnetMode] = useState(false);
+  let [measureTool, setMeasureTool] = useState(false);
 
   let [data, setData] = useState([]);
 
@@ -85,6 +86,10 @@ function Container(props) {
   useEffect(() => {
     overlayRenderer.setMagnetMode(magnetMode);
   }, [magnetMode])
+
+  useEffect(() => {
+    overlayRenderer.setMeasureTool(measureTool);
+  }, [measureTool])
 
   // After canvas size is set
   useEffect(() => {
@@ -131,7 +136,7 @@ function Container(props) {
               </g>
             </svg>
           </div>
-          <div onClick={() => {console.log('ruler mode')}} style={{background: true ? '' : ''}}>
+          <div onClick={() => {setMeasureTool(!measureTool)}} style={{background: measureTool ? '#1E53E5' : ''}}>
             <svg viewBox='0 0 28 28' width='28' height='28'>
               <g fill='#ffffff' fillRule='evenodd'>
                 <path d="M2 9.75a1.5 1.5 0 0 0-1.5 1.5v5.5a1.5 1.5 0 0 0 1.5 1.5h24a1.5 1.5 0 0 0 1.5-1.5v-5.5a1.5 1.5 0 0 0-1.5-1.5zm0 1h3v2.5h1v-2.5h3.25v3.9h1v-3.9h3.25v2.5h1v-2.5h3.25v3.9h1v-3.9H22v2.5h1v-2.5h3a.5.5 0 0 1 .5.5v5.5a.5.5 0 0 1-.5.5H2a.5.5 0 0 1-.5-.5v-5.5a.5.5 0 0 1 .5-.5z" transform="rotate(-45 14 14)"/>
