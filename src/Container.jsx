@@ -8,6 +8,7 @@ import ChartRenderer from './classes/ChartRenderer.js';
 import OverlayRenderer from './classes/OverlayRenderer.js';
 import { useRef, useEffect, useState } from 'react';
 import styles from './styles.module.scss';
+import Magnet from '../assets/magnet.svg?component';
 
 let last = [0, 169, 420, 121, 321];
 let bars = [];
@@ -119,7 +120,11 @@ function Container(props) {
   return (
     <div className={styles.container} ref={container_ref}>  
       <Toolbar_top className={styles.toolbar_top}/>
-      <Toolbar_side className={styles.toolbar_side}/>
+      <Toolbar_side className={styles.toolbar_side}>
+        <div style={{background: magnetMode ? '#1E53E5' : ''}}>
+          <Magnet onClick={()=>{setMagnetMode(!magnetMode)}} fill='#ffffff'/>
+        </div>
+      </Toolbar_side>
       <Chart className={styles.chart} setData={setData} overlayRenderer={overlayRenderer} chartRenderer={chartRenderer} candleWidth={candleWidth} setCandleWidth={setCandleWidth} scaleDelta={scaleDelta} scaleCenter={scaleCenter} width={canvasWidth} height={canvasHeight}/>
       <Price_scale className={styles.price_scale} scaleDelta={scaleDelta} setScaleDelta={setScaleDelta} height={canvasHeight}/>
       <Time_scale className={styles.time_scale} width={canvasWidth}/>

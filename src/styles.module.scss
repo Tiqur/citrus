@@ -60,7 +60,27 @@ body {
 }
 
 .toolbar_side {
+  display: flex;
+  flex-direction: row;
+  justify-content: center;
   background: #131722;
   border-right: 1px solid #2a2e39;
   grid-area: o;
+   
+  & div {
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    flex-direction: column;
+    margin: 0.3em;
+    padding: 0.2em;
+    height: 1.5em;
+    border-radius: 4px;
+
+    &:hover {
+      background: #343946;
+      cursor: pointer;
+    }
+  }
+  
 }

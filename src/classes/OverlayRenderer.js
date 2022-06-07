@@ -58,8 +58,6 @@ class OverlayRenderer {
     let y;
 
     // Horizontal line
-    this.magnetMode = true;
-
     if (this.magnetMode && this.barHover) {
       const accumulation = this.barHover.open >= this.barHover.close;
       const middleTop = this.barHover.coords.high-(this.barHover.coords.high-(accumulation ? this.barHover.coords.open : this.barHover.coords.close))/2;

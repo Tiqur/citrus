@@ -1,6 +1,8 @@
 function Toolbar_side(props) {
   return (
-    <div {...props}/>
+    <div {...props}>
+      {props.children}
+    </div>
   )
 }
 
