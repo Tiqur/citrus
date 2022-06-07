@@ -10,7 +10,7 @@ import { useRef, useEffect, useState } from 'react';
 import styles from './styles.module.scss';
 
 let last = [0, 169, 420, 121, 321];
-const bars = [];
+let bars = [];
 
 function getRandomArbitrary(min, max) {
   return Math.floor(Math.random() * (max - min) + min)
@@ -36,14 +36,15 @@ for (let i=0; i<0; i++) {
   bars.push(new Bar(...gen()))
 }
 
-bars.push(new Bar(0, 29661.9, 29666.6, 29592.4, 29655.2))
-bars.push(new Bar(0, 29655.3, 29661.4, 29630.5, 29642.4))
-bars.push(new Bar(0, 29642.5, 29658.9, 29638.3, 29641.0))
-bars.push(new Bar(0, 29641.0, 29687.3, 29592.4, 29686.0))
-bars.push(new Bar(0, 29685.9, 29714.0, 29664.5, 29682.1))
-bars.push(new Bar(0, 29682.1, 29690.3, 29654.9, 29672.9))
-bars.push(new Bar(0, 29673.0, 29700.0, 29671.7, 29682.0))
-bars.push(new Bar(0, 29999.0, 30000.0, 30000.0, 30001.0))
+bars.push(new Bar(0, 29643.0, 30246.7, 29330.0, 29536.7))
+bars.push(new Bar(0, 29536.7, 29877.0, 27952.1, 29194.0))
+bars.push(new Bar(0, 29194.0, 29387.0, 28259.6, 28623.2))
+bars.push(new Bar(0, 28623.3, 29265.7, 28520.0, 29018.8))
+bars.push(new Bar(0, 29018.8, 29595.2, 28825.0, 29452.8))
+bars.push(new Bar(0, 29452.6, 32307.6, 29301.1, 31726.5))
+
+// TODO: Fix this later
+bars = bars.reverse();
 
 
 function Container(props) {
@@ -57,7 +58,10 @@ function Container(props) {
 
   // TODO: AUTO SCALE 
   let [scaleCenter, setScaleCenter] = useState(29600);
-  let [scaleDelta, setScaleDelta] = useState(100);
+  let [scaleDelta, setScaleDelta] = useState(5000);
+
+  // TODO: Add button / hotkey
+  let [magnetMode, setMagnetMode] = useState(false);
 
   let [data, setData] = useState([]);
 
@@ -76,6 +80,10 @@ function Container(props) {
     chartRenderer.setData(bars);
     overlayRenderer.setData(bars);
   }, [data])
+
+  useEffect(() => {
+    overlayRenderer.setMagnetMode(magnetMode);
+  }, [magnetMode])
 
   // After canvas size is set
   useEffect(() => {
