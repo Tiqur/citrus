@@ -13,7 +13,7 @@ function Price_scale(props) {
     if (mouseDown) {
       let rect = canvas.getBoundingClientRect();
       const currentY = event.clientY - rect.top;
-      const scale = currentY > lastY ? 1.02 : 0.98;
+      const scale = currentY > lastY ? 1.03 : 0.97;
 
       props.setScaleDelta(props.scaleDelta*scale);
       setLastY(currentY);

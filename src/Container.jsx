@@ -32,16 +32,16 @@ function gen() {
   return ohlc;
 }
 
-for (let i=0; i<0; i++) {
+for (let i=0; i<10000; i++) {
   bars.push(new Bar(...gen()))
 }
 
-bars.push(new Bar(0, 29643.0, 30246.7, 29330.0, 29536.7))
-bars.push(new Bar(0, 29536.7, 29877.0, 27952.1, 29194.0))
-bars.push(new Bar(0, 29194.0, 29387.0, 28259.6, 28623.2))
-bars.push(new Bar(0, 28623.3, 29265.7, 28520.0, 29018.8))
-bars.push(new Bar(0, 29018.8, 29595.2, 28825.0, 29452.8))
-bars.push(new Bar(0, 29452.6, 32307.6, 29301.1, 31726.5))
+//bars.push(new Bar(0, 29643.0, 30246.7, 29330.0, 29536.7))
+//bars.push(new Bar(0, 29536.7, 29877.0, 27952.1, 29194.0))
+//bars.push(new Bar(0, 29194.0, 29387.0, 28259.6, 28623.2))
+//bars.push(new Bar(0, 28623.3, 29265.7, 28520.0, 29018.8))
+//bars.push(new Bar(0, 29018.8, 29595.2, 28825.0, 29452.8))
+//bars.push(new Bar(0, 29452.6, 32307.6, 29301.1, 31726.5))
 
 // TODO: Fix this later
 bars = bars.reverse();
@@ -57,8 +57,8 @@ function Container(props) {
   let [candleWidth, setCandleWidth] = useState(21);
 
   // TODO: AUTO SCALE 
-  let [scaleCenter, setScaleCenter] = useState(29600);
-  let [scaleDelta, setScaleDelta] = useState(5000);
+  let [scaleCenter, setScaleCenter] = useState(bars[0].open);
+  let [scaleDelta, setScaleDelta] = useState(1000);
 
   // TODO: Add button / hotkey
   let [magnetMode, setMagnetMode] = useState(false);
