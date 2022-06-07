@@ -53,16 +53,21 @@ class ChartRenderer {
 
       const xLoc = -i*bar_gap+this.canvasWidth-right_margin-candleWidth;
 
-      // Set candle color
-      this.ctx.fillStyle = accumulation ? "#ffffff" : "#5966e1"
-
-      // Draw candle body
-      this.ctx.fillRect(xLoc, coords.open, candleWidth, coords.close-coords.open)
-
-      // Draw candle wick
-      this.ctx.fillRect(xLoc+wickOffset, coords.low, wickWidth, coords.high-coords.low)
-
+      // Set canvas coordinates for each candle
       this.data[i].setCoords({time: xLoc, open: coords.open, high: coords.high, low: coords.low, close: coords.close})
+
+      // Only draw candles that are within view
+      const ctxOffsetX = -this.ctx.getTransform().e
+      if (xLoc > -candleWidth+ctxOffsetX && xLoc < this.canvasWidth+ctxOffsetX) {
+        // Set candle color
+        this.ctx.fillStyle = accumulation ? "#ffffff" : "#5966e1"
+
+        // Draw candle body
+        this.ctx.fillRect(xLoc, coords.open, candleWidth, coords.close-coords.open)
+
+        // Draw candle wick
+        this.ctx.fillRect(xLoc+wickOffset, coords.low, wickWidth, coords.high-coords.low)
+      }
     }
   }
 
