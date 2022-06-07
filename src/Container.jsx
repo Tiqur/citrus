@@ -62,6 +62,7 @@ function Container(props) {
   let [scaleDelta, setScaleDelta] = useState(1000);
 
   // TODO: Add button / hotkey
+  let [drawingMode, setDrawingMode] = useState(false);
   let [magnetMode, setMagnetMode] = useState(false);
   let [measureTool, setMeasureTool] = useState(false);
 
@@ -88,6 +89,7 @@ function Container(props) {
   }, [magnetMode])
 
   useEffect(() => {
+    setDrawingMode(measureTool);
     overlayRenderer.setMeasureTool(measureTool);
   }, [measureTool])
 
@@ -145,7 +147,7 @@ function Container(props) {
           </div>
         </div>
       </Toolbar_side>
-      <Chart className={styles.chart} setData={setData} overlayRenderer={overlayRenderer} chartRenderer={chartRenderer} candleWidth={candleWidth} setCandleWidth={setCandleWidth} scaleDelta={scaleDelta} scaleCenter={scaleCenter} width={canvasWidth} height={canvasHeight}/>
+      <Chart drawingMode={drawingMode} className={styles.chart} setData={setData} overlayRenderer={overlayRenderer} chartRenderer={chartRenderer} candleWidth={candleWidth} setCandleWidth={setCandleWidth} scaleDelta={scaleDelta} scaleCenter={scaleCenter} width={canvasWidth} height={canvasHeight}/>
       <Price_scale className={styles.price_scale} scaleDelta={scaleDelta} setScaleDelta={setScaleDelta} height={canvasHeight}/>
       <Time_scale className={styles.time_scale} width={canvasWidth}/>
       <div className={styles.corner1}/>
