@@ -65,6 +65,7 @@ class OverlayRenderer {
       const middleTop = this.barHover.coords.high-(this.barHover.coords.high-this.barHover.coords.open)/2;
       const middleBottom = this.barHover.coords.low-(this.barHover.coords.low-this.barHover.coords.close)/2;
       const middle = this.barHover.coords.close-(this.barHover.coords.close-this.barHover.coords.open)/2;
+      const accumulation = this.barHover.open >= this.barHover.close;
 
       // Debugging
       //this.ctx.fillStyle = '#32CD32'
@@ -81,9 +82,9 @@ class OverlayRenderer {
       if (mouseYPos <= middleTop) {
         y = this.barHover.coords.high;
       } else if (mouseYPos > middleTop && mouseYPos <= middle) {
-        y = this.barHover.coords.open;
+        y = accumulation ? this.barHover.coords.open : this.barHover.coords.close;
       } else if (mouseYPos > middle && mouseYPos <= middleBottom) {
-        y = this.barHover.coords.close;
+        y = accumulation ? this.barHover.coords.close : this.barHover.coords.open;
       } else if (mouseYPos > middleBottom) {
         y = this.barHover.coords.low;
       } 
