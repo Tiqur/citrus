@@ -44,19 +44,18 @@ class OverlayRenderer {
     }
   }
 
-  // Draw crosshair
-  drawCrosshair(e) {
-    const [ctxOffsetX, ctxOffsetY] = [-this.ctx.getTransform().e, -this.ctx.getTransform().f]
+  // Return mouse X pos or middle of candle ( if any )
+  getCrosshairX(e) {
+    const ctxOffsetX= -this.ctx.getTransform().e
     const middleOfCandle = this.convertToDateAxis(e.offsetX+ctxOffsetX);
-    const mouseYPos = e.offsetY+ctxOffsetY;
-    let y = mouseYPos;
-    let x = middleOfCandle || e.offsetX+ctxOffsetX;
+    return middleOfCandle || e.offsetX+ctxOffsetX;
+  }
 
-    // Draw vertical and horizontal lines
-    this.ctx.strokeStyle = '#ffffff'
-    this.ctx.lineWidth = 0.5;
-    this.ctx.beginPath();
-    this.ctx.setLineDash([6, 6])
+  // Return mouse Y pos or OHLC if magnet mode enabled ( or any )
+  getCrosshairY(e) {
+    const ctxOffsetY = -this.ctx.getTransform().f;
+    const mouseYPos = e.offsetY+ctxOffsetY;
+    let y;
 
     // Horizontal line
     this.magnetMode = true;
@@ -89,6 +88,20 @@ class OverlayRenderer {
         y = this.barHover.coords.low;
       } 
     }
+    return y || mouseYPos;
+  }
+
+  // Draw crosshair
+  drawCrosshair(e) {
+    const [ctxOffsetX, ctxOffsetY] = [-this.ctx.getTransform().e, -this.ctx.getTransform().f]
+    const x = this.getCrosshairX(e);
+    const y = this.getCrosshairY(e);
+
+    // Draw vertical and horizontal lines
+    this.ctx.strokeStyle = '#ffffff'
+    this.ctx.lineWidth = 0.5;
+    this.ctx.beginPath();
+    this.ctx.setLineDash([6, 6])
 
     // Vertical
     this.ctx.moveTo(x, ctxOffsetY);
