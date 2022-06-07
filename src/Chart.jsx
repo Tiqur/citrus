@@ -1,4 +1,5 @@
 import { useRef, useEffect, useState, setState } from 'react';
+import * as Hamster from 'hamsterjs';
 
 function getTransformedPoint(ctx, x, y) {
     const transform = ctx.getTransform();
@@ -25,6 +26,9 @@ function Chart(props) {
     const chartCanvas = chartRef.current
     const chartCtx = chartCanvas.getContext('2d', {alpha: false})
 
+    // Cross browser mouse wheel handler and normalizer 
+    const hamster = Hamster(overlayCanvas);
+
     // Panning and zoom variables
     let isDragging = false;
     let dragStartPosition = {x: 0, y: 0};
@@ -39,6 +43,13 @@ function Chart(props) {
 
     // Draw chart on state change ( This should probably be removed and replaced with something better )
     props.chartRenderer.draw();
+
+    hamster.wheel((e, delta, deltaX, deltaY) => {
+      const up = event.deltaY < 0;
+      const zoomIn = props.candleWidth + (props.candleWidth >= 100 ? 0 : 1);
+      const zoomOut = props.candleWidth - (props.candleWidth <= 3 ? 0 : 1);
+      props.setCandleWidth(up ? zoomIn : zoomOut)
+    })
 
     function mouseDown(e) {
       isDragging=true;
@@ -64,28 +75,17 @@ function Chart(props) {
       overlayCanvas.style.cursor='crosshair';
     } 
 
-    function onWheel(e) {
-      const up = event.deltaY < 0;
-      const zoomIn = props.candleWidth + (props.candleWidth >= 100 ? 0 : 1);
-      const zoomOut = props.candleWidth - (props.candleWidth <= 3 ? 0 : 1);
-      props.setCandleWidth(up ? zoomIn : zoomOut)
-
-      props.chartRenderer.draw();
-      props.overlayRenderer.draw(e);
-    }
-
     overlayCanvas.addEventListener('mousedown', mouseDown);
     overlayCanvas.addEventListener('mousemove', mouseMove);
     overlayCanvas.addEventListener('mouseup', mouseUp);
     overlayCanvas.addEventListener('mouseout', mouseUp);
-    overlayCanvas.addEventListener('wheel', onWheel);
 
     return () => {
       overlayCanvas.removeEventListener('mousedown', mouseDown);
       overlayCanvas.removeEventListener('mousemove', mouseMove);
       overlayCanvas.removeEventListener('mouseup', mouseUp);
       overlayCanvas.removeEventListener('mouseout', mouseUp);
-      overlayCanvas.removeEventListener('wheel', onWheel);
+      hamster.unwheel();
     }
   })
 
