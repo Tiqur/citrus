@@ -39,8 +39,10 @@ class OverlayRenderer {
     // If cursor xPos > most recent candle
     const t = this.data[0].coords.time + Math.floor((this.candleWidth-bar_gap)/2);
     const l = this.data[0].coords.time + this.data[0].coords.time - this.data[1].coords.time + Math.floor((this.candleWidth-bar_gap)/2);
-    if (xPos > t && xPos < l) return this.data[0].coords.time+wickOffset;
-    if (xPos > t) return xPos;
+    if (xPos > t && xPos < l) {
+      this.barHover = this.data[0];
+      return this.data[0].coords.time+wickOffset;
+    } else if (xPos > t) return xPos;
     
     for (let i = 0; i < this.data.length; i++) {
         const coords = this.data[i].coords;
