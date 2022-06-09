@@ -35,9 +35,18 @@ class OverlayRenderer {
     //}
 
     this.barHover = null;
+
+    // If cursor xPos > most recent candle
+    const t = this.data[0].coords.time + Math.floor((this.candleWidth-bar_gap)/2);
+    const l = this.data[0].coords.time + this.data[0].coords.time - this.data[1].coords.time + Math.floor((this.candleWidth-bar_gap)/2);
+    if (xPos > t && xPos < l) return this.data[0].coords.time+wickOffset;
+    if (xPos > t) return xPos;
+    
     for (let i = 0; i < this.data.length; i++) {
         const coords = this.data[i].coords;
         const middle = coords.time + Math.floor((this.candleWidth-bar_gap)/2);
+        //this.ctx.fillRect(middle, this.canvasHeight/2, 1, 100)
+        //this.ctx.fillText(i, middle, 100, 100)
 
         // Middle of candlestick
         if (xPos > middle) {
@@ -157,8 +166,8 @@ class OverlayRenderer {
     const [cX, cY] = [-this.ctx.getTransform().e, -this.ctx.getTransform().f]
 
     // Draw price near crosshair
-    this.ctx.fillText(this.getPriceFromCoords(e), 10+cX, this.canvasHeight-10+cY)
-    this.ctx.fillText(timestamp.toDate(this.barHover.time), 10+cX, this.canvasHeight-25+cY)
+    this.ctx.fillText(this.getPriceFromCoords(e), 10+cX, this.canvasHeight-25+cY)
+    this.ctx.fillText(timestamp.toDate(this.barHover.time), 10+cX, this.canvasHeight-10+cY)
   }
 
   // Draws everything on main chart
